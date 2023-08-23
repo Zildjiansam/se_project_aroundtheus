@@ -16,12 +16,12 @@
   display: grid;
   grid-template-areas:
     "title button"
-    "description .";
+    "description description";
   grid-template-columns: minmax(auto, 373px) auto;
   align-content: center;
 }
 
-.profile__info_title {
+.profile__title {
   color: #fff;
   font-family: Inter;
   font-size: 42px;
@@ -30,6 +30,10 @@
   line-height: 48px;
   margin: 0;
   grid-area: title;
+  max-width: 196px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .profile__info_description {
@@ -41,6 +45,10 @@
   font-weight: 400;
   line-height: normal;
   grid-area: description;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 196px;
 }
 
 .profile__edit-button {
@@ -71,4 +79,63 @@
 .profile__add-button:hover {
   opacity: 0.6;
   cursor: url(../images/Layer13.png), auto;
+}
+
+@media screen and (max-width: 770px) {
+  .profile__title {
+    color: #fff;
+    font-family: Inter;
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    margin-top: 10px;
+  }
+  .profile__info {
+    grid-template-columns: minmax(auto, 220px) auto;
+  }
+  .profile__edit-button {
+    margin: 15px 0 auto;
+  }
+}
+
+@media screen and (max-width: 620px) {
+  .profile {
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 0 36px;
+  }
+  .profile__info {
+    padding: 0 0 36px;
+  }
+  .profile__image {
+    margin: 0 0 15px;
+  }
+  .profile__title {
+    justify-self: end;
+    color: #fff;
+    text-align: center;
+    font-family: Inter;
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+  }
+  .profile__edit-button {
+    width: 18px;
+    height: 18px;
+    padding: 0;
+    margin: 12px;
+  }
+  .profile__add-button {
+    background: transparent url(../images/Add-Button-large.svg) center no-repeat;
+    width: 282px;
+    margin: 0 auto;
+  }
+  .profile__info_description {
+    grid-column: 1/3;
+    justify-self: center;
+    margin-top: 10px;
+    font-size: 14px;
+  }
 }

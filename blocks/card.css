@@ -31,6 +31,9 @@
   line-height: normal;
   margin: 0;
   padding-left: 20px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 .card__title_heart-button {
   width: 21px;
