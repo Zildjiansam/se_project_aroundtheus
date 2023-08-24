@@ -1,6 +1,5 @@
 .card {
   max-width: 282px;
-  max-height: 361px;
 }
 
 .card__image {
@@ -15,7 +14,6 @@
   display: flex;
   background-color: #fff;
   margin: 0;
-  height: 79px;
   width: 282px;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
@@ -24,12 +22,12 @@
 }
 .card__title_name {
   color: #000;
-  font-family: Inter;
+  font-family: Inter, Arial, sans-serif;
   font-size: 24px;
   font-style: normal;
   font-weight: 900;
   line-height: normal;
-  margin: 0;
+  margin: 25px 0;
   padding-left: 20px;
   text-overflow: ellipsis;
   white-space: nowrap;

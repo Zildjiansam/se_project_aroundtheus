@@ -23,7 +23,7 @@
 
 .profile__title {
   color: #fff;
-  font-family: Inter;
+  font-family: Inter, Arial, sans-serif;
   font-size: 42px;
   font-style: normal;
   font-weight: 500;
@@ -39,7 +39,7 @@
 .profile__info_description {
   margin: 7px 0 0 0;
   color: #fff;
-  font-family: Inter;
+  font-family: Inter, Arial, sans-serif;
   font-size: 18px;
   font-style: normal;
   font-weight: 400;
@@ -63,6 +63,7 @@
 
 .profile__edit-button:hover {
   opacity: 0.6;
+  cursor: url(../images/Layer13.png), auto;
 }
 
 .profile__add-button {
@@ -73,6 +74,7 @@
   align-self: center;
   border: solid #fff 1px;
   margin-left: auto;
+  border-radius: 2px;
   transition: opacity 0.2s ease-in;
 }
 
@@ -84,11 +86,7 @@
 @media screen and (max-width: 770px) {
   .profile__title {
     color: #fff;
-    font-family: Inter;
     font-size: 22px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
     margin-top: 10px;
   }
   .profile__info {
@@ -115,11 +113,6 @@
     justify-self: end;
     color: #fff;
     text-align: center;
-    font-family: Inter;
-    font-size: 22px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
     max-width: 196px;
   }
   .profile__edit-button {

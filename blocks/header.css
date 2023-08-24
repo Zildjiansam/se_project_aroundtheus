@@ -1,6 +1,6 @@
 .header {
   margin-top: 45px;
-  border-bottom: solid grey 1px;
+  border-bottom: solid rgba(84, 84, 84, 1) 1px;
 }
 
 .header__logo {
