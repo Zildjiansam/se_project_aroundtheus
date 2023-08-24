@@ -133,3 +133,8 @@
     font-size: 14px;
   }
 }
+@media screen and (max-width: 320px) {
+  .profile__info {
+    padding: 0 0 30px;
+  }
+}

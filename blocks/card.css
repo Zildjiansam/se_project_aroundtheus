@@ -34,9 +34,11 @@
   overflow: hidden;
 }
 .card__title_heart-button {
+  background: transparent url(../images/heart-button.svg) center no-repeat;
   width: 21px;
   height: 18px;
-  padding-right: 20px;
+  margin-right: 20px;
+  border: none;
   transition: opacity 0.2s ease-in;
 }
 
