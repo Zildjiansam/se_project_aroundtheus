@@ -16,4 +16,4 @@ This is a photo sharing page, repsonsively built, to create one's own profile, s
 
 **Links**
 
-Github Pages -
+Github Pages - https://zildjiansam.github.io/se_project_aroundtheus/x
