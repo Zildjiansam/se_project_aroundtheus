@@ -104,3 +104,27 @@
   transition: opacity 0.3s ease-in;
   cursor: pointer;
 }
+
+@media screen and (max-width: 620px) {
+  .modal__container {
+    padding: 25px 22px;
+  }
+  .modal__heading {
+    color: #000;
+    font-family: Inter;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 900;
+    line-height: normal;
+  }
+  .modal__close {
+    width: 26px;
+    height: 26px;
+    top: -40px;
+    right: 0;
+  }
+  .modal__button {
+    width: 238px;
+    height: 46px;
+  }
+}
