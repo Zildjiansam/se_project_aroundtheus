@@ -51,19 +51,20 @@
     </div>
     <div class="modal" id="profile-edit-modal">
       <div class="modal__container">
-        <button class="modal__close"></button>
-        <p class="modal__heading">Edit Profile</p>
+        <button class="modal__close" type="button"></button>
+        <h3 class="modal__heading">Edit Profile</h3>
         <form class="modal__form">
           <input
             type="text"
             name="title"
-            class="modal__form modal__form_title"
+            class="modal__form modal__input"
             placeholder="Name"
           />
           <input
             type="text"
             name="description"
-            class="modal__form modal__form_description"
+            class="modal__form modal__input"
+            id="edit-modal-input-desc"
             placeholder="Description"
           />
           <button class="modal__button-save" type="submit">Save</button>
@@ -85,6 +86,6 @@
       </li>
     </template>
 
-    <script src="./scripts/index.js"></script>
+    <script src="./scripts/index.js" defer></script>
   </body>
 </html>

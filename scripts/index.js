@@ -26,19 +26,19 @@ const initialCards = [
 ];
 
 const profEditBtn = document.querySelector("#profile-edit-button");
-const profEditmodal = document.querySelector("#profile-edit-modal");
-const profEditBtnClose = profEditmodal.querySelector(".modal__close");
+const profEditModal = document.querySelector("#profile-edit-modal");
+const profEditBtnClose = profEditModal.querySelector(".modal__close");
 const profTitle = document.querySelector(".profile__title");
 const profDesc = document.querySelector(".profile__description");
-const profEditTitleInput = document.querySelector(".modal__form_title");
-const profEditDescInput = document.querySelector(".modal__form_description");
-const profEditForm = profEditmodal.querySelector(".modal__form");
+const profEditTitleInput = document.querySelector(".modal__input");
+const profEditDescInput = document.querySelector("#edit-modal-input-desc");
+const profEditForm = profEditModal.querySelector(".modal__form");
 const cardTemplate =
   document.querySelector("#card-template").content.firstElementChild;
 const cardListEl = document.querySelector(".cards__list");
 
 function closePopup() {
-  profEditmodal.classList.remove("modal__opened");
+  profEditModal.classList.remove("modal_opened");
 }
 
 function handleProfEditSubmit(e) {
@@ -61,7 +61,7 @@ function getCardData(cardData) {
 profEditBtn.addEventListener("click", function () {
   profEditTitleInput.value = profTitle.textContent;
   profEditDescInput.value = profDesc.textContent;
-  profEditmodal.classList.add("modal__opened");
+  profEditModal.classList.add("modal_opened");
 });
 
 profEditBtnClose.addEventListener("click", closePopup);
