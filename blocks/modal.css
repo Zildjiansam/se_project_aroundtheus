@@ -84,7 +84,7 @@
   padding-bottom: 13px;
 }
 
-.modal__button {
+.modal__button-save {
   width: 358px;
   height: 50px;
   border-radius: 2px;
@@ -99,7 +99,7 @@
   border: none;
 }
 
-.modal__button:hover {
+.modal__button-save:hover {
   opacity: 0.8;
   transition: opacity 0.3s ease-in;
   cursor: pointer;
@@ -123,7 +123,7 @@
     top: -40px;
     right: 0;
   }
-  .modal__button {
+  .modal__button-save {
     width: 238px;
     height: 46px;
   }
