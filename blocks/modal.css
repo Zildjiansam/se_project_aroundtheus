@@ -74,17 +74,15 @@
   border-left: none;
   border-right: none;
   border-color: rgba(0, 0, 0, 0.2);
-  margin-top: 54px;
   padding-bottom: 13px;
 }
 
+.modal__input:first-of-type {
+  margin-top: 54px;
+}
+
 .modal__input:last-of-type {
-  border-top: none;
-  border-left: none;
-  border-right: none;
-  border-color: rgba(0, 0, 0, 0.2);
   margin-bottom: 48px;
-  padding-bottom: 13px;
   margin-top: 0;
 }
 
@@ -129,7 +127,7 @@
     top: -40px;
     right: 0;
   }
-  ..modal__button-save {
+  .modal__button-save {
     height: 46px;
   }
 }
