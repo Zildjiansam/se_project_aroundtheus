@@ -1,3 +1,7 @@
+/* -------------------------------------------------------------------------- */
+/*                                   Arrays                                   */
+/* -------------------------------------------------------------------------- */
+
 const initialCards = [
   {
     name: "NEOM Nature Reserve, Saudi Arabia",
@@ -25,6 +29,10 @@ const initialCards = [
   },
 ];
 
+/* -------------------------------------------------------------------------- */
+/*                                  Variables                                 */
+/* -------------------------------------------------------------------------- */
+
 const profEditBtn = document.querySelector("#profile-edit-button");
 const profEditModal = document.querySelector("#profile-edit-modal");
 const profEditBtnClose = profEditModal.querySelector(".modal__close");
@@ -36,6 +44,10 @@ const profEditForm = profEditModal.querySelector(".modal__form");
 const cardTemplate =
   document.querySelector("#card-template").content.firstElementChild;
 const cardListEl = document.querySelector(".cards__list");
+
+/* -------------------------------------------------------------------------- */
+/*                                  Functions                                 */
+/* -------------------------------------------------------------------------- */
 
 function closePopup() {
   profEditModal.classList.remove("modal_opened");
@@ -58,6 +70,10 @@ function getCardData(cardData) {
   return cardElement;
 }
 
+/* -------------------------------------------------------------------------- */
+/*                                  Listeners                                 */
+/* -------------------------------------------------------------------------- */
+
 profEditBtn.addEventListener("click", function () {
   profEditTitleInput.value = profTitle.textContent;
   profEditDescInput.value = profDesc.textContent;
@@ -68,7 +84,22 @@ profEditBtnClose.addEventListener("click", closePopup);
 
 profEditForm.addEventListener("submit", handleProfEditSubmit);
 
+/* -------------------------------------------------------------------------- */
+/*                                    Loops                                   */
+/* -------------------------------------------------------------------------- */
+
 initialCards.forEach((cardData) => {
   const cardElement = getCardData(cardData);
   cardListEl.prepend(cardElement);
 });
+
+function checkTheCar(distance, model, damaged, price) {
+  const canBuy =
+    distance <= 100000 &&
+    (model === "Ford" || model === "Chevrolet") &&
+    !damaged &&
+    price <= 10000;
+  return canBuy;
+}
+
+checkTheCar(50000, "Chevrolet", false, 7000);
