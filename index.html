@@ -36,7 +36,8 @@
             <p class="profile__description">Explorer</p>
           </div>
           <button
-            class="profile__add-button"
+            class="card__add-button"
+            id="card-add-button"
             type="button"
             aria-label="add"
           ></button>
@@ -49,6 +50,7 @@
         <p class="footer__text">&#64; 2023 Around The U.S.</p>
       </footer>
     </div>
+    <!-- ----------------------------- Edit Modal ------------------------------ -->
     <div class="modal" id="profile-edit-modal">
       <div class="modal__container">
         <button class="modal__close" type="button"></button>
@@ -58,6 +60,7 @@
             type="text"
             name="title"
             class="modal__input"
+            id="edit_modal-input-name"
             placeholder="Name"
           />
           <input
@@ -71,10 +74,33 @@
         </form>
       </div>
     </div>
+    <!-- --------------------------- Card Add Modal ---------------------------- -->
+    <div class="modal" id="card-add-modal">
+      <div class="modal__container">
+        <button class="modal__close" type="button"></button>
+        <h3 class="modal__heading">New Place</h3>
+        <form class="modal__form">
+          <input
+            type="text"
+            name="title"
+            class="modal__input"
+            placeholder="Title"
+          />
+          <input
+            type="url"
+            name="description"
+            class="modal__input"
+            id="edit-modal-input-desc"
+            placeholder="Image URL"
+          />
+          <button class="modal__button-save" type="submit">Create</button>
+        </form>
+      </div>
+    </div>
 
     <template id="card-template">
       <li class="card">
-        <img src="" alt="bald mountains image" class="card__image" />
+        <img src="" alt="" class="card__image" />
         <div class="card__description">
           <h2 class="card__title"></h2>
           <button

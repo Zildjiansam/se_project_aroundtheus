@@ -41,7 +41,7 @@
   top: -48px;
   right: -48px;
   border: none;
-  transition: rotate 1.5s ease-out;
+  transition: rotate 0.2s ease-out;
   cursor: pointer;
 }
 

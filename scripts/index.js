@@ -33,31 +33,50 @@ const initialCards = [
 /*                                  Variables                                 */
 /* -------------------------------------------------------------------------- */
 
+/* ---------------------------- Profile Variables --------------------------- */
 const profEditBtn = document.querySelector("#profile-edit-button");
 const profEditModal = document.querySelector("#profile-edit-modal");
 const profEditBtnClose = profEditModal.querySelector(".modal__close");
 const profTitle = document.querySelector(".profile__title");
 const profDesc = document.querySelector(".profile__description");
-const profEditTitleInput = document.querySelector(".modal__input");
+const profEditNameInput = document.querySelector("#edit_modal-input-name");
 const profEditDescInput = document.querySelector("#edit-modal-input-desc");
 const profEditForm = profEditModal.querySelector(".modal__form");
+
+/* ----------------------------- Card Variables ----------------------------- */
 const cardTemplate =
   document.querySelector("#card-template").content.firstElementChild;
 const cardListEl = document.querySelector(".cards__list");
+const cardAddModal = document.querySelector("#card-add-modal");
+const cardAddBtn = document.querySelector("#card-add-button");
+const cardAddModalClose = cardAddModal.querySelector(".modal__close");
+
+/* -------------------------------------------------------------------------- */
+/*                                    Loops                                   */
+/* -------------------------------------------------------------------------- */
+
+initialCards.forEach((cardData) => {
+  const cardElement = getCardData(cardData);
+  cardListEl.prepend(cardElement);
+});
 
 /* -------------------------------------------------------------------------- */
 /*                                  Functions                                 */
 /* -------------------------------------------------------------------------- */
 
-function closePopup() {
-  profEditModal.classList.remove("modal_opened");
+function closeModal(modal) {
+  modal.classList.remove("modal_opened");
+}
+
+function openModal(modal) {
+  modal.classList.add("modal_opened");
 }
 
 function handleProfEditSubmit(e) {
   e.preventDefault();
-  profTitle.textContent = profEditTitleInput.value;
+  profTitle.textContent = profEditNameInput.value;
   profDesc.textContent = profEditDescInput.value;
-  closePopup();
+  closeModal(profEditModal);
 }
 
 function getCardData(cardData) {
@@ -74,32 +93,15 @@ function getCardData(cardData) {
 /*                                  Listeners                                 */
 /* -------------------------------------------------------------------------- */
 
-profEditBtn.addEventListener("click", function () {
-  profEditTitleInput.value = profTitle.textContent;
+/* ---------------------------- Profile Button Listeners --------------------------- */
+profEditBtn.addEventListener("click", () => {
+  profEditNameInput.value = profTitle.textContent;
   profEditDescInput.value = profDesc.textContent;
-  profEditModal.classList.add("modal_opened");
+  openModal(profEditModal);
 });
-
-profEditBtnClose.addEventListener("click", closePopup);
-
+profEditBtnClose.addEventListener("click", () => closeModal(profEditModal));
 profEditForm.addEventListener("submit", handleProfEditSubmit);
 
-/* -------------------------------------------------------------------------- */
-/*                                    Loops                                   */
-/* -------------------------------------------------------------------------- */
-
-initialCards.forEach((cardData) => {
-  const cardElement = getCardData(cardData);
-  cardListEl.prepend(cardElement);
-});
-
-function checkTheCar(distance, model, damaged, price) {
-  const canBuy =
-    distance <= 100000 &&
-    (model === "Ford" || model === "Chevrolet") &&
-    !damaged &&
-    price <= 10000;
-  return canBuy;
-}
-
-checkTheCar(50000, "Chevrolet", false, 7000);
+/* -------------------------- Card Button Listeners ------------------------- */
+cardAddBtn.addEventListener("click", () => openModal(cardAddModal));
+cardAddModalClose.addEventListener("click", () => closeModal(cardAddModal));
