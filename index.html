@@ -50,6 +50,7 @@
         <p class="footer__text">&#64; 2023 Around The U.S.</p>
       </footer>
     </div>
+
     <!-- ----------------------------- Edit Modal ------------------------------ -->
     <div class="modal" id="profile-edit-modal">
       <div class="modal__container">
@@ -74,6 +75,7 @@
         </form>
       </div>
     </div>
+
     <!-- --------------------------- Card Add Modal ---------------------------- -->
     <div class="modal" id="card-add-modal">
       <div class="modal__container">
@@ -98,10 +100,21 @@
         </form>
       </div>
     </div>
+    <!-- ------------------------- Image Preview Modal ------------------------- -->
+    <div class="modal" id="image-preview-modal">
+      <div class="modal__container">
+        <button class="modal__close" type="button"></button>
+      </div>
+    </div>
 
     <template id="card-template">
       <li class="card">
         <img src="" alt="" class="card__image" />
+        <button
+          class="card__delete-button"
+          type="button"
+          aria-label="delete"
+        ></button>
         <div class="card__description">
           <h2 class="card__title"></h2>
           <button

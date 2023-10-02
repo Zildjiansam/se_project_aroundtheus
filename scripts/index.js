@@ -33,7 +33,6 @@ const initialCards = [
 /*                                  Variables                                 */
 /* -------------------------------------------------------------------------- */
 
-/* ---------------------------- Profile Variables --------------------------- */
 const profEditBtn = document.querySelector("#profile-edit-button");
 const profEditModal = document.querySelector("#profile-edit-modal");
 const profEditBtnClose = profEditModal.querySelector(".modal__close");
@@ -43,7 +42,6 @@ const profEditNameInput = document.querySelector("#edit_modal-input-name");
 const profEditDescInput = document.querySelector("#edit-modal-input-desc");
 const profEditForm = profEditModal.querySelector(".modal__form");
 
-/* ----------------------------- Card Variables ----------------------------- */
 const cardTemplate =
   document.querySelector("#card-template").content.firstElementChild;
 const cardListEl = document.querySelector(".cards__list");
@@ -53,6 +51,11 @@ const cardAddModalClose = cardAddModal.querySelector(".modal__close");
 const cardAddForm = cardAddModal.querySelector(".modal__form");
 const cardAddTitleInput = document.querySelector("#add-modal-input-title");
 const cardAddUrlInput = document.querySelector("#add-modal-input-url");
+
+const imagePrevModal = document.querySelector("#image-preview-modal");
+const imagePrevModalClose = imagePrevModal.querySelector(".modal__close");
+const imagePrevModalContainer =
+  imagePrevModal.querySelector(".modal__container");
 
 /* -------------------------------------------------------------------------- */
 /*                                    Loops                                   */
@@ -96,9 +99,33 @@ function getCardElement(cardData) {
   const cardElement = cardTemplate.cloneNode(true);
   const cardImageEl = cardElement.querySelector(".card__image");
   const cardTitleEl = cardElement.querySelector(".card__title");
+  const likeButton = cardElement.querySelector(".card__heart-button");
+  const deleteButton = cardElement.querySelector(".card__delete-button");
+
+  likeButton.addEventListener("click", () =>
+    likeButton.classList.toggle("card__heart-button_active")
+  );
+
+  deleteButton.addEventListener("click", () => cardElement.remove());
+
+  cardImageEl.addEventListener("click", () => {
+    openModal(imagePrevModal);
+  });
+
+  cardImageEl.addEventListener("click", () => {
+    openModal(imagePrevModal);
+    imagePrevModalContainer.append(cardImageEl);
+  });
+
+  imagePrevModalClose.addEventListener("click", () => {
+    closeModal(imagePrevModal);
+  });
+
+  () => (cardTitleEl.textContent = cardData.name);
   cardTitleEl.textContent = cardData.name;
   cardImageEl.setAttribute("alt", cardData.name);
   cardImageEl.setAttribute("src", cardData.link);
+
   return cardElement;
 }
 
