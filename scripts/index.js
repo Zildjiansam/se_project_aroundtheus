@@ -135,7 +135,7 @@ function getCardElement(cardData) {
 /*                                  Listeners                                 */
 /* -------------------------------------------------------------------------- */
 
-/* ---------------------------- Profile Button Listeners --------------------------- */
+/* ---------------------------- Profile Listeners --------------------------- */
 profEditBtn.addEventListener("click", () => {
   profEditNameInput.value = profTitle.textContent;
   profEditDescInput.value = profDesc.textContent;
@@ -144,7 +144,7 @@ profEditBtn.addEventListener("click", () => {
 profEditBtnClose.addEventListener("click", () => closeModal(profEditModal));
 profEditForm.addEventListener("submit", handleProfEditSubmit);
 
-/* -------------------------- Card Button Listeners ------------------------- */
+/* -------------------------- Card Listeners ------------------------- */
 cardAddBtn.addEventListener("click", () => openModal(cardAddModal));
 cardAddModalClose.addEventListener("click", () => closeModal(cardAddModal));
 
