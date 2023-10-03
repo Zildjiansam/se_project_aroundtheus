@@ -56,6 +56,10 @@ const imagePrevModal = document.querySelector("#image-preview-modal");
 const imagePrevModalClose = imagePrevModal.querySelector(".modal__close");
 const imagePrevModalContainer =
   imagePrevModal.querySelector(".modal__container");
+const imagePrevModalImage = imagePrevModal.querySelector(".modal__prev-image");
+const imagePrevModalImageCaption = imagePrevModal.querySelector(
+  ".modal__preview-image_caption"
+);
 
 /* -------------------------------------------------------------------------- */
 /*                                    Loops                                   */
@@ -109,12 +113,10 @@ function getCardElement(cardData) {
   deleteButton.addEventListener("click", () => cardElement.remove());
 
   cardImageEl.addEventListener("click", () => {
+    imagePrevModalImage.setAttribute("src", cardData.link);
+    imagePrevModalImage.setAttribute("alt", cardData.name);
+    imagePrevModalImageCaption.textContent = cardData.name;
     openModal(imagePrevModal);
-  });
-
-  cardImageEl.addEventListener("click", () => {
-    openModal(imagePrevModal);
-    imagePrevModalContainer.append(cardImageEl);
   });
 
   imagePrevModalClose.addEventListener("click", () => {
