@@ -58,7 +58,7 @@ const imagePrevModalContainer =
   imagePrevModal.querySelector(".modal__container");
 const imagePrevModalImage = imagePrevModal.querySelector(".modal__prev-image");
 const imagePrevModalImageCaption = imagePrevModal.querySelector(
-  ".modal__preview-image_caption"
+  ".modal__preview-image-caption"
 );
 
 /* -------------------------------------------------------------------------- */
@@ -144,7 +144,7 @@ profEditBtn.addEventListener("click", () => {
 profEditBtnClose.addEventListener("click", () => closeModal(profEditModal));
 profEditForm.addEventListener("submit", handleProfEditSubmit);
 
-/* -------------------------- Card Listeners ------------------------- */
+/* -------------------------- Card Button Listeners ------------------------- */
 cardAddBtn.addEventListener("click", () => openModal(cardAddModal));
 cardAddModalClose.addEventListener("click", () => closeModal(cardAddModal));
 

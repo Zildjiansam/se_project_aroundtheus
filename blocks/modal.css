@@ -57,7 +57,7 @@
   max-height: 75vh;
   margin: auto;
 }
-.modal__preview-image_caption {
+.modal__preview-image-caption {
   margin-top: 10px;
   flex-shrink: 0;
   font-family: Inter;
