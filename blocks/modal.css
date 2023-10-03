@@ -7,11 +7,15 @@
   background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   z-index: 999;
-  display: none;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0.3s, opacity 0.5s linear;
 }
 
 .modal_opened {
   display: flex;
+  visibility: visible;
+  opacity: 1;
 }
 
 .modal__container {
@@ -49,13 +53,11 @@
 }
 
 .modal__prev-image {
-  width: 75vw;
-  height: 75vh;
+  max-width: 75vw;
+  max-height: 75vh;
   margin: auto;
 }
 .modal__preview-image_caption {
-  width: 291px;
-  height: 12px;
   margin-top: 10px;
   flex-shrink: 0;
   color: #fff;
