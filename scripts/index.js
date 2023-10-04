@@ -91,6 +91,7 @@ function handleAddCardSubmit(e) {
   const name = cardAddTitleInput.value;
   const link = cardAddUrlInput.value;
   renderCard({ name, link }, cardListEl);
+  e.target.reset();
   closeModal(cardAddModal);
 }
 
@@ -119,11 +120,6 @@ function getCardElement(cardData) {
     openModal(imagePrevModal);
   });
 
-  imagePrevModalClose.addEventListener("click", () => {
-    closeModal(imagePrevModal);
-  });
-
-  () => (cardTitleEl.textContent = cardData.name);
   cardTitleEl.textContent = cardData.name;
   cardImageEl.setAttribute("alt", cardData.name);
   cardImageEl.setAttribute("src", cardData.link);
@@ -147,5 +143,9 @@ profEditForm.addEventListener("submit", handleProfEditSubmit);
 /* -------------------------- Card Button Listeners ------------------------- */
 cardAddBtn.addEventListener("click", () => openModal(cardAddModal));
 cardAddModalClose.addEventListener("click", () => closeModal(cardAddModal));
+
+imagePrevModalClose.addEventListener("click", () => {
+  closeModal(imagePrevModal);
+});
 
 cardAddForm.addEventListener("submit", handleAddCardSubmit);
