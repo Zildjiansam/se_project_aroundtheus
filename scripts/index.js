@@ -149,3 +149,5 @@ imagePrevModalClose.addEventListener("click", () => {
 });
 
 cardAddForm.addEventListener("submit", handleAddCardSubmit);
+
+/* ------------------------------- Dumb Stuff ------------------------------- */
