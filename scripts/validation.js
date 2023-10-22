@@ -26,7 +26,7 @@ function toggleButtonState(modalInputs, buttonEl) {
 
 function hasInvalidInputs(modalInputs) {
   return modalInputs.some((modalInput) => {
-    return !modalInput.validity.valid;
+    return !modalInput.validity.valid || !modalInput.value;
   });
 }
 // ------------------------------
@@ -43,7 +43,7 @@ function setEventlisteners(modalForm, object) {
   const modalInputs = Array.from(
     modalForm.querySelectorAll(object.inputSelector)
   );
-  const buttonEl = document.querySelector(".modal__button");
+  const buttonEl = modalForm.querySelector(".modal__button");
   toggleButtonState(modalInputs, buttonEl);
   modalInputs.forEach((modalInput) => {
     modalInput.addEventListener("input", (evt) => {
