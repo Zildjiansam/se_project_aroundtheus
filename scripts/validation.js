@@ -1,16 +1,35 @@
 // enabling validation by calling enableValidation()
 // pass all the settings on call
 
-function showErrorMesssage(
-  modalForm,
-  modalInput,
-  { inputErrorClass, errorClass }
-) {
-  const errorMessageEl = modalForm.querySelector(`#${modalInput}-error`);
-  modalInput.classList.add(inputErrorClass);
+function showErrorMessage(modalForm, modalInput, object) {
+  const errorMessageEl = modalForm.querySelector(`#${modalInput.id}-error`);
+  modalInput.classList.add(object.inputErrorClass);
   errorMessageEl.textContent = modalInput.validationMessage;
-  errorMessageEl.classList.add(errorClass);
+  errorMessageEl.classList.add(object.errorClass);
 }
+
+function hideErrorMessage(modalForm, modalInput, object) {
+  const errorMessageEl = modalForm.querySelector(`#${modalInput.id}-error`);
+  modalInput.classList.remove(object.inputErrorClass);
+  errorMessageEl.textContent = modalInput.validationMessage;
+  errorMessageEl.classList.remove(object.errorClass);
+}
+
+// ------------------------------
+function toggleButtonState(modalInputs, buttonEl) {
+  if (hasInvalidInputs(modalInputs)) {
+    buttonEl.classList.add("modal__button_disabled");
+  } else {
+    buttonEl.classList.remove("modal__button_disabled");
+  }
+}
+
+function hasInvalidInputs(modalInputs) {
+  return modalInputs.some((modalInput) => {
+    return !modalInput.validity.valid;
+  });
+}
+// ------------------------------
 
 function checkInputValidity(modalForm, modalInput, object) {
   if (!modalInput.validity.valid) {
@@ -24,9 +43,12 @@ function setEventlisteners(modalForm, object) {
   const modalInputs = Array.from(
     modalForm.querySelectorAll(object.inputSelector)
   );
+  const buttonEl = document.querySelector(".modal__button");
+  toggleButtonState(modalInputs, buttonEl);
   modalInputs.forEach((modalInput) => {
     modalInput.addEventListener("input", (evt) => {
       checkInputValidity(modalForm, modalInput, object);
+      toggleButtonState(modalInputs, buttonEl);
     });
   });
 }
@@ -47,7 +69,7 @@ const config = {
   submitButtonSelector: ".modal__button",
   inactiveButtonClass: "modal__button_disabled",
   inputErrorClass: "modal__input_type_error",
-  errorClass: "modal__error_visible",
+  errorClass: "modal__input-error_visible",
 };
 
 enableValidation(config);

@@ -123,8 +123,6 @@
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  opacity: 0;
-  visibility: hidden;
 }
 
 .modal__input-error_visible {
