@@ -61,6 +61,9 @@ const imagePrevModalImageCaption = imagePrevModal.querySelector(
   ".modal__preview-image-caption"
 );
 
+//const modalEl = document.querySelector(".modal");
+const modalCont = document.querySelector(".modal__container");
+
 /* -------------------------------------------------------------------------- */
 /*                                    Loops                                   */
 /* -------------------------------------------------------------------------- */
@@ -72,11 +75,20 @@ initialCards.forEach((cardData) => renderCard(cardData, cardListEl));
 /* -------------------------------------------------------------------------- */
 
 function closeModal(modal) {
-  modal.classList.remove("modal_opened");
+  modal.classList.remove("modal__opened");
+  document.removeEventListener("keydown", handleEsc);
 }
 
 function openModal(modal) {
-  modal.classList.add("modal_opened");
+  modal.classList.add("modal__opened");
+  document.addEventListener("keydown", handleEsc);
+}
+
+function handleEsc(evt) {
+  if (evt.key === "Escape") {
+    const modal = document.querySelector(".modal__opened");
+    closeModal(modal);
+  }
 }
 
 function handleProfEditSubmit(e) {
@@ -131,23 +143,47 @@ function getCardElement(cardData) {
 /*                                  Listeners                                 */
 /* -------------------------------------------------------------------------- */
 
-/* ---------------------------- Profile Listeners --------------------------- */
+profEditModal.addEventListener("mousedown", (evt) => {
+  if (
+    evt.target.classList.contains("modal") ||
+    evt.target.classList.contains("modal__close")
+  ) {
+    closeModal(profEditModal);
+  }
+});
+
+cardAddModal.addEventListener("mousedown", (evt) => {
+  if (
+    evt.target.classList.contains("modal") ||
+    evt.target.classList.contains("modal__close")
+  ) {
+    closeModal(cardAddModal);
+  }
+});
+
+imagePrevModal.addEventListener("mousedown", (evt) => {
+  if (
+    evt.target.classList.contains("modal") ||
+    evt.target.classList.contains("modal__close")
+  ) {
+    closeModal(imagePrevModal);
+  }
+});
+
+// document.addEventListener("keydown", (evt) => {
+//   if (evt.key === "Escape") {
+//     closeModal(modalEl);
+//   }
+// });
+
 profEditBtn.addEventListener("click", () => {
-  profEditNameInput.value = profTitle.textContent;
-  profEditDescInput.value = profDesc.textContent;
+  profEditNameInput.value = profTitle.ariaPlaceholder;
+  profEditDescInput.value = profDesc.ariaPlaceholder;
   openModal(profEditModal);
 });
-profEditBtnClose.addEventListener("click", () => closeModal(profEditModal));
 profEditForm.addEventListener("submit", handleProfEditSubmit);
 
 /* -------------------------- Card Button Listeners ------------------------- */
 cardAddBtn.addEventListener("click", () => openModal(cardAddModal));
-cardAddModalClose.addEventListener("click", () => closeModal(cardAddModal));
-
-imagePrevModalClose.addEventListener("click", () => {
-  closeModal(imagePrevModal);
-});
 
 cardAddForm.addEventListener("submit", handleAddCardSubmit);
-
-/* ------------------------------- Dumb Stuff ------------------------------- */

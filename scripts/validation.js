@@ -15,12 +15,22 @@ function hideErrorMessage(modalForm, modalInput, object) {
   errorMessageEl.classList.remove(object.errorClass);
 }
 
+function disableButton(buttonEl) {
+  buttonEl.classList.add("modal__button_disabled");
+  buttonEl.setAttribute("disabled", "");
+}
+
+function enableButton(buttonEl) {
+  buttonEl.classList.remove("modal__button_disabled");
+  buttonEl.removeAttribute("disabled");
+}
+
 // ------------------------------
 function toggleButtonState(modalInputs, buttonEl) {
   if (hasInvalidInputs(modalInputs)) {
-    buttonEl.classList.add("modal__button_disabled");
+    disableButton(buttonEl);
   } else {
-    buttonEl.classList.remove("modal__button_disabled");
+    enableButton(buttonEl);
   }
 }
 
