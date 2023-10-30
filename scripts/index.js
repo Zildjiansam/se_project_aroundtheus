@@ -61,8 +61,6 @@ const imagePrevModalImageCaption = imagePrevModal.querySelector(
   ".modal__preview-image-caption"
 );
 
-//const modalCont = document.querySelector(".modal__container");
-
 /* -------------------------------------------------------------------------- */
 /*                                    Loops                                   */
 /* -------------------------------------------------------------------------- */
@@ -77,14 +75,12 @@ function openModal(modal) {
   modal.classList.add("modal__opened");
   document.addEventListener("keydown", handleEsc);
   modal.addEventListener("mousedown", handleCloseModalOnRemoteClick);
-  modal.addEventListener("mousedown", handleModalCloseButton);
 }
 
 function closeModal(modal) {
   modal.classList.remove("modal__opened");
   document.removeEventListener("keydown", handleEsc);
   modal.removeEventListener("mousedown", handleCloseModalOnRemoteClick);
-  modal.removeEventListener("mousedown", handleModalCloseButton);
 }
 
 function handleEsc(evt) {
@@ -94,19 +90,12 @@ function handleEsc(evt) {
   }
 }
 
-function handleModalCloseButton(evt) {
-  if (evt.target.classList.contains("modal__close")) {
-    const modal = evt.target.closest(".modal");
-    closeModal(modal);
-  }
-}
-
 function handleCloseModalOnRemoteClick(evt) {
   if (
     evt.target === evt.currentTarget ||
     evt.target.classList.contains("modal__close")
   ) {
-    closeModal(evt.target);
+    closeModal(evt.currentTarget);
   }
 }
 
