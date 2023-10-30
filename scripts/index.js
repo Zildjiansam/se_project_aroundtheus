@@ -61,8 +61,7 @@ const imagePrevModalImageCaption = imagePrevModal.querySelector(
   ".modal__preview-image-caption"
 );
 
-//const modalEl = document.querySelector(".modal");
-const modalCont = document.querySelector(".modal__container");
+//const modalCont = document.querySelector(".modal__container");
 
 /* -------------------------------------------------------------------------- */
 /*                                    Loops                                   */
@@ -74,20 +73,40 @@ initialCards.forEach((cardData) => renderCard(cardData, cardListEl));
 /*                                  Functions                                 */
 /* -------------------------------------------------------------------------- */
 
-function closeModal(modal) {
-  modal.classList.remove("modal__opened");
-  document.removeEventListener("keydown", handleEsc);
-}
-
 function openModal(modal) {
   modal.classList.add("modal__opened");
   document.addEventListener("keydown", handleEsc);
+  modal.addEventListener("mousedown", handleCloseModalOnRemoteClick);
+  modal.addEventListener("mousedown", handleModalCloseButton);
+}
+
+function closeModal(modal) {
+  modal.classList.remove("modal__opened");
+  document.removeEventListener("keydown", handleEsc);
+  modal.removeEventListener("mousedown", handleCloseModalOnRemoteClick);
+  modal.removeEventListener("mousedown", handleModalCloseButton);
 }
 
 function handleEsc(evt) {
   if (evt.key === "Escape") {
     const modal = document.querySelector(".modal__opened");
     closeModal(modal);
+  }
+}
+
+function handleModalCloseButton(evt) {
+  if (evt.target.classList.contains("modal__close")) {
+    const modal = evt.target.closest(".modal");
+    closeModal(modal);
+  }
+}
+
+function handleCloseModalOnRemoteClick(evt) {
+  if (
+    evt.target === evt.currentTarget ||
+    evt.target.classList.contains("modal__close")
+  ) {
+    closeModal(evt.target);
   }
 }
 
@@ -143,42 +162,42 @@ function getCardElement(cardData) {
 /*                                  Listeners                                 */
 /* -------------------------------------------------------------------------- */
 
-profEditModal.addEventListener("mousedown", (evt) => {
-  if (
-    evt.target.classList.contains("modal") ||
-    evt.target.classList.contains("modal__close")
-  ) {
-    closeModal(profEditModal);
-  }
-});
+// profEditModal.addEventListener("mousedown", handleModalCloseButton);
 
-cardAddModal.addEventListener("mousedown", (evt) => {
-  if (
-    evt.target.classList.contains("modal") ||
-    evt.target.classList.contains("modal__close")
-  ) {
-    closeModal(cardAddModal);
-  }
-});
+// cardAddModal.addEventListener("mousedown", handleModalCloseButton);
 
-imagePrevModal.addEventListener("mousedown", (evt) => {
-  if (
-    evt.target.classList.contains("modal") ||
-    evt.target.classList.contains("modal__close")
-  ) {
-    closeModal(imagePrevModal);
-  }
-});
+// imagePrevModal.addEventListener("mousedown", handleModalCloseButton);
 
-// document.addEventListener("keydown", (evt) => {
-//   if (evt.key === "Escape") {
-//     closeModal(modalEl);
+// profEditModal.addEventListener("mousedown", (evt) => {
+//   if (
+// evt.target.classList.contains("modal") ||
+//     evt.target.classList.contains("modal__close")
+//   ) {
+//     closeModal(profEditModal);
+//   }
+// });
+
+// cardAddModal.addEventListener("mousedown", (evt) => {
+//   if (
+//     evt.target.classList.contains("modal") ||
+//     evt.target.classList.contains("modal__close")
+//   ) {
+//     closeModal(cardAddModal);
+//   }
+// });
+
+// imagePrevModal.addEventListener("mousedown", (evt) => {
+//   if (
+//     evt.target.classList.contains("modal") ||
+//     evt.target.classList.contains("modal__close")
+//   ) {
+//     closeModal(imagePrevModal);
 //   }
 // });
 
 profEditBtn.addEventListener("click", () => {
-  profEditNameInput.value = profTitle.ariaPlaceholder;
-  profEditDescInput.value = profDesc.ariaPlaceholder;
+  profEditNameInput.value = profTitle.textContent;
+  profEditDescInput.value = profDesc.textContent;
   openModal(profEditModal);
 });
 profEditForm.addEventListener("submit", handleProfEditSubmit);
