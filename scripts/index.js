@@ -151,39 +151,6 @@ function getCardElement(cardData) {
 /*                                  Listeners                                 */
 /* -------------------------------------------------------------------------- */
 
-// profEditModal.addEventListener("mousedown", handleModalCloseButton);
-
-// cardAddModal.addEventListener("mousedown", handleModalCloseButton);
-
-// imagePrevModal.addEventListener("mousedown", handleModalCloseButton);
-
-// profEditModal.addEventListener("mousedown", (evt) => {
-//   if (
-// evt.target.classList.contains("modal") ||
-//     evt.target.classList.contains("modal__close")
-//   ) {
-//     closeModal(profEditModal);
-//   }
-// });
-
-// cardAddModal.addEventListener("mousedown", (evt) => {
-//   if (
-//     evt.target.classList.contains("modal") ||
-//     evt.target.classList.contains("modal__close")
-//   ) {
-//     closeModal(cardAddModal);
-//   }
-// });
-
-// imagePrevModal.addEventListener("mousedown", (evt) => {
-//   if (
-//     evt.target.classList.contains("modal") ||
-//     evt.target.classList.contains("modal__close")
-//   ) {
-//     closeModal(imagePrevModal);
-//   }
-// });
-
 profEditBtn.addEventListener("click", () => {
   profEditNameInput.value = profTitle.textContent;
   profEditDescInput.value = profDesc.textContent;
