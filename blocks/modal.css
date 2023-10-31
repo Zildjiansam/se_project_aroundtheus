@@ -113,8 +113,8 @@
 }
 
 .modal__input-error {
-  margin-bottom: 15px;
-  width: 164px;
+  margin-bottom: 20px;
+  width: 305px;
   height: 12px;
   flex-shrink: 0;
   color: #f00;
