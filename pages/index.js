@@ -1,7 +1,11 @@
 import Section from "../components/Section.js";
+import UserInfo from "../components/UserInfo.js";
 import { initialCards } from "../utils/constants.js";
+import PopupWithForm from "../components/PopupWithForm.js";
+import PopupWithImage from "../components/PopupWithImage.js";
 import Card from "../components/Card.js";
 import { FormValidator, config } from "../components/FormValidator.js";
+import UserInfo from "../components/UserInfo.js";
 
 /* -------------------------------------------------------------------------- */
 /*                                  Variables                                 */
@@ -36,6 +40,7 @@ const imagePrevModalImageCaption = imagePrevModal.querySelector(
 /* -------------------------------------------------------------------------- */
 /*                                    Loops & Class Instances                 */
 /* -------------------------------------------------------------------------- */
+const userInfo = new UserInfo(profTitle, profDesc);
 
 const section = new Section(
   {
@@ -49,6 +54,12 @@ const section = new Section(
   cardListEl
 );
 
+const editProfModal = new PopupWithForm("#profile-edit-modal");
+
+const addCardModal = new PopupWithForm("#card-add-modal");
+
+const prevImageModal = new PopupWithImage("#image-preview-modal");
+
 const editFormValidator = new FormValidator(config, profEditForm);
 
 const addFormValidator = new FormValidator(config, cardAddForm);
@@ -57,24 +68,23 @@ const addFormValidator = new FormValidator(config, cardAddForm);
 /*                                  Functions                                 */
 /* -------------------------------------------------------------------------- */
 
-function openModal(modal) {
-  modal.classList.add("modal__opened");
-  document.addEventListener("keydown", handleEsc);
-  modal.addEventListener("mousedown", handleCloseModalOnRemoteClick);
-}
+// function openModal(modal) {
+//   modal.classList.add("modal__opened");
+//   document.addEventListener("keydown", handleEsc);
+//   modal.addEventListener("mousedown", handleCloseModalOnRemoteClick);
+// }
 
-function closeModal(modal) {
-  modal.classList.remove("modal__opened");
-  document.removeEventListener("keydown", handleEsc);
-  modal.removeEventListener("mousedown", handleCloseModalOnRemoteClick);
-}
+// function closeModal(modal) {
+//   modal.classList.remove("modal__opened");
+//   document.removeEventListener("keydown", handleEsc);
+//   modal.removeEventListener("mousedown", handleCloseModalOnRemoteClick);
+// }
 
 function handleImageClick(cardData) {
-  imagePrevModalImage.setAttribute("src", cardData._link);
-  imagePrevModalImage.setAttribute("alt", cardData._name);
-  imagePrevModalImageCaption.textContent = cardData._name;
-  cardData._popup.open();
-  openModal(imagePrevModal);
+  // imagePrevModalImage.setAttribute("src", cardData._link);
+  // imagePrevModalImage.setAttribute("alt", cardData._name);
+  // imagePrevModalImageCaption.textContent = cardData._name;
+  prevImageModal.open(cardData);
 }
 
 // function handleEsc(evt) {
@@ -84,14 +94,14 @@ function handleImageClick(cardData) {
 //   }
 // }
 
-function handleCloseModalOnRemoteClick(evt) {
-  if (
-    evt.target === evt.currentTarget ||
-    evt.target.classList.contains("modal__close")
-  ) {
-    closeModal(evt.currentTarget);
-  }
-}
+// function handleCloseModalOnRemoteClick(evt) {
+//   if (
+//     evt.target === evt.currentTarget ||
+//     evt.target.classList.contains("modal__close")
+//   ) {
+//     closeModal(evt.currentTarget);
+//   }
+// }
 
 function handleProfEditSubmit(e) {
   e.preventDefault();
@@ -121,20 +131,30 @@ addFormValidator.enableValidation();
 
 section.renderItems();
 
+editProfModal.setEventListeners();
+
+addCardModal.setEventListeners();
+
+prevImageModal.setEventListeners();
+
+userInfo.getUserInfo();
+
+userInfo.setUserInfo();
+
 /* -------------------------- Profile Button Listeners ------------------------- */
 
 profEditBtn.addEventListener("click", () => {
   profEditNameInput.value = profTitle.textContent;
   profEditDescInput.value = profDesc.textContent;
   editFormValidator.resetModalValidity();
-  openModal(profEditModal);
+  editProfModal.open();
 });
 profEditForm.addEventListener("submit", handleProfEditSubmit);
 
 /* -------------------------- Card Button Listeners ------------------------- */
 cardAddBtn.addEventListener("click", () => {
   addFormValidator.resetModalValidity();
-  openModal(cardAddModal);
+  addCardModal.open();
 });
 
 cardAddForm.addEventListener("submit", handleAddCardSubmit);

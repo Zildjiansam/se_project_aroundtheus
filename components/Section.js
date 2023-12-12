@@ -1,8 +1,8 @@
 export default class Section {
-  constructor({ items, renderer }, cardListEl) {
+  constructor({ items, renderer }, itemContainerEl) {
     this._renderedItems = items;
     this._renderer = renderer;
-    this._container = cardListEl;
+    this._container = itemContainerEl;
   }
 
   addItem(element) {
