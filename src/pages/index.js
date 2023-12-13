@@ -111,21 +111,22 @@ function renderCard(cardData) {
   return card.getCardEl();
 }
 
-function handleProfEditSubmit(e) {
-  e.preventDefault();
-  userInfo.setUserInfo(profEditNameInput.value, profEditDescInput.value);
-  editFormValidator.toggleButtonState();
-  editProfModal.close(profEditModal);
+function handleProfEditSubmit(profileData) {
+  console.log(profileData);
+  // e.preventDefault();
+  userInfo.setUserInfo(profileData.title, profileData.description);
+  // editFormValidator.toggleButtonState();
+  editProfModal.close();
 }
 
 function handleAddCardSubmit(e) {
-  e.preventDefault();
+  // e.preventDefault();
   const name = cardAddTitleInput.value;
   const link = cardAddUrlInput.value;
   const card = renderCard({ name, link }, cardListEl);
   section.addItem(card);
-  cardAddForm.reset();
-  addFormValidator.toggleButtonState();
+  // cardAddForm.reset();
+  // addFormValidator.toggleButtonState();
   addCardModal.close(cardAddModal);
 }
 
@@ -148,12 +149,15 @@ prevImageModal.setEventListeners();
 /* -------------------------- Profile Button Listeners ------------------------- */
 
 profEditBtn.addEventListener("click", () => {
-  profEditNameInput.value = userInfo.getUserInfo().profileName;
-  profEditDescInput.value = userInfo.getUserInfo().description;
+  // profEditNameInput.value = userInfo.getUserInfo().profileName;
+  // profEditDescInput.value = userInfo.getUserInfo().description;
+  const { profileName, description } = userInfo.getUserInfo();
+  profEditNameInput.value = profileName;
+  profEditDescInput.value = description;
   editFormValidator.resetModalValidity();
   editProfModal.open();
 });
-profEditForm.addEventListener("submit", handleProfEditSubmit);
+// profEditForm.addEventListener("submit", handleProfEditSubmit);
 
 /* -------------------------- Card Button Listeners ------------------------- */
 cardAddBtn.addEventListener("click", () => {
