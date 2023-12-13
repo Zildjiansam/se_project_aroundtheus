@@ -1,5 +1,6 @@
 import Section from "../components/Section.js";
 import { initialCards } from "../utils/constants.js";
+import "./index.css";
 import PopupWithForm from "../components/PopupWithForm.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import Card from "../components/Card.js";
