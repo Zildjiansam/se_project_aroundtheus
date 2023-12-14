@@ -86,12 +86,11 @@ function handleProfEditSubmit(profileData) {
   editProfModal.close();
 }
 
-function handleAddCardSubmit() {
+function handleAddCardSubmit(inputValues) {
   // e.preventDefault();
   const name = cardAddTitleInput.value;
   const link = cardAddUrlInput.value;
-  const card = renderCard({ name, link }, cardListEl);
-  console.log(card);
+  const card = renderCard({ name, link });
   section.addItem(card);
   // addFormValidator.toggleButtonState();
   addCardModal.close();
