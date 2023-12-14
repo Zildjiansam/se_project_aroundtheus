@@ -88,9 +88,10 @@ function handleProfEditSubmit(profileData) {
 
 function handleAddCardSubmit(inputValues) {
   // e.preventDefault();
-  const name = cardAddTitleInput.value;
-  const link = cardAddUrlInput.value;
-  const card = renderCard({ name, link });
+  // const name = cardAddTitleInput.value;
+  // const link = cardAddUrlInput.value;
+  const { title, url } = inputValues;
+  const card = renderCard({ name: title, link: url });
   section.addItem(card);
   // addFormValidator.toggleButtonState();
   addCardModal.close();
