@@ -46,8 +46,7 @@ const section = new Section(
   {
     items: initialCards,
     renderer: (item) => {
-      const card = new Card(item, "#card-template", handleImageClick);
-      const cardElement = card.getCardEl();
+      const cardElement = renderCard(item);
       section.addItem(cardElement);
     },
   },
@@ -71,40 +70,9 @@ const addFormValidator = new FormValidator(config, cardAddForm);
 /*                                  Functions                                 */
 /* -------------------------------------------------------------------------- */
 
-// function openModal(modal) {
-//   modal.classList.add("modal__opened");
-//   document.addEventListener("keydown", handleEsc);
-//   modal.addEventListener("mousedown", handleCloseModalOnRemoteClick);
-// }
-
-// function closeModal(modal) {
-//   modal.classList.remove("modal__opened");
-//   document.removeEventListener("keydown", handleEsc);
-//   modal.removeEventListener("mousedown", handleCloseModalOnRemoteClick);
-// }
-
 function handleImageClick(cardData) {
-  // imagePrevModalImage.setAttribute("src", cardData._link);
-  // imagePrevModalImage.setAttribute("alt", cardData._name);
-  // imagePrevModalImageCaption.textContent = cardData._name;
   prevImageModal.open(cardData);
 }
-
-// function handleEsc(evt) {
-//   if (evt.key === "Escape") {
-//     const modal = document.querySelector(".modal__opened");
-//     closeModal(modal);
-//   }
-// }
-
-// function handleCloseModalOnRemoteClick(evt) {
-//   if (
-//     evt.target === evt.currentTarget ||
-//     evt.target.classList.contains("modal__close")
-//   ) {
-//     closeModal(evt.currentTarget);
-//   }
-// }
 
 function renderCard(cardData) {
   const card = new Card(cardData, "#card-template", handleImageClick);
@@ -112,22 +80,21 @@ function renderCard(cardData) {
 }
 
 function handleProfEditSubmit(profileData) {
-  console.log(profileData);
   // e.preventDefault();
   userInfo.setUserInfo(profileData.title, profileData.description);
   // editFormValidator.toggleButtonState();
   editProfModal.close();
 }
 
-function handleAddCardSubmit(e) {
+function handleAddCardSubmit() {
   // e.preventDefault();
   const name = cardAddTitleInput.value;
   const link = cardAddUrlInput.value;
   const card = renderCard({ name, link }, cardListEl);
+  console.log(card);
   section.addItem(card);
-  // cardAddForm.reset();
   // addFormValidator.toggleButtonState();
-  addCardModal.close(cardAddModal);
+  addCardModal.close();
 }
 
 /* -------------------------------------------------------------------------- */
@@ -149,20 +116,15 @@ prevImageModal.setEventListeners();
 /* -------------------------- Profile Button Listeners ------------------------- */
 
 profEditBtn.addEventListener("click", () => {
-  // profEditNameInput.value = userInfo.getUserInfo().profileName;
-  // profEditDescInput.value = userInfo.getUserInfo().description;
   const { profileName, description } = userInfo.getUserInfo();
   profEditNameInput.value = profileName;
   profEditDescInput.value = description;
   editFormValidator.resetModalValidity();
   editProfModal.open();
 });
-// profEditForm.addEventListener("submit", handleProfEditSubmit);
 
 /* -------------------------- Card Button Listeners ------------------------- */
 cardAddBtn.addEventListener("click", () => {
   addFormValidator.resetModalValidity();
   addCardModal.open();
 });
-
-// cardAddForm.addEventListener("submit", handleAddCardSubmit);
