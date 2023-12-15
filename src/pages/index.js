@@ -13,7 +13,6 @@ import UserInfo from "../components/UserInfo.js";
 
 const profEditBtn = document.querySelector("#profile-edit-button");
 const profEditModal = document.querySelector("#profile-edit-modal");
-// const profEditBtnClose = profEditModal.querySelector(".modal__close");
 const profTitle = document.querySelector(".profile__title");
 const profDesc = document.querySelector(".profile__description");
 const profEditNameInput = document.querySelector("#edit_modal-input-name");
@@ -23,19 +22,7 @@ const profEditForm = profEditModal.querySelector(".modal__form");
 const cardListEl = document.querySelector(".cards__list");
 const cardAddModal = document.querySelector("#card-add-modal");
 const cardAddBtn = document.querySelector("#card-add-button");
-// const cardAddModalClose = cardAddModal.querySelector(".modal__close");
 const cardAddForm = cardAddModal.querySelector(".modal__form");
-const cardAddTitleInput = document.querySelector("#add-modal-input-title");
-const cardAddUrlInput = document.querySelector("#add-modal-input-url");
-
-const imagePrevModal = document.querySelector("#image-preview-modal");
-// const imagePrevModalClose = imagePrevModal.querySelector(".modal__close");
-// const imagePrevModalContainer =
-// imagePrevModal.querySelector(".modal__container");
-// const imagePrevModalImage = imagePrevModal.querySelector(".modal__prev-image");
-// const imagePrevModalImageCaption = imagePrevModal.querySelector(
-// ".modal__preview-image-caption"
-// );
 
 /* -------------------------------------------------------------------------- */
 /*                                    Loops & Class Instances                 */
@@ -82,18 +69,14 @@ function renderCard(cardData) {
 function handleProfEditSubmit(profileData) {
   // e.preventDefault();
   userInfo.setUserInfo(profileData.title, profileData.description);
-  // editFormValidator.toggleButtonState();
   editProfModal.close();
 }
 
 function handleAddCardSubmit(inputValues) {
   // e.preventDefault();
-  // const name = cardAddTitleInput.value;
-  // const link = cardAddUrlInput.value;
   const { title, url } = inputValues;
   const card = renderCard({ name: title, link: url });
   section.addItem(card);
-  // addFormValidator.toggleButtonState();
   addCardModal.close();
 }
 
