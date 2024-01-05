@@ -37,6 +37,11 @@
   line-height: normal;
 }
 
+.modal__container:last-of-type {
+  height: 181px;
+  padding: 28px 36px 34px;
+}
+
 .modal__image-container {
   box-sizing: border-box;
   flex-shrink: 0;
@@ -89,7 +94,7 @@
 
 .modal__heading {
   color: #000;
-  margin: 0 auto;
+  margin: 0 0 38px 0;
 }
 
 .modal__form {
@@ -139,7 +144,7 @@
 }
 
 .modal__input:first-of-type {
-  margin-top: 54px;
+  margin-top: 16px;
 }
 
 .modal__input:last-of-type {

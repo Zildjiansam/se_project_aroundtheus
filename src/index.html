@@ -50,7 +50,7 @@
       </footer>
     </div>
 
-    <!-- ----------------------------- Edit Modal ------------------------------ -->
+    <!-- ------------------------- Edit Profile Modal ------------------------------ -->
     <div class="modal" id="profile-edit-modal">
       <div class="modal__container">
         <button class="modal__close" type="button"></button>
@@ -125,6 +125,7 @@
         </form>
       </div>
     </div>
+
     <!-- ------------------------- Image Preview Modal ------------------------- -->
     <div class="modal" id="image-preview-modal">
       <div class="modal__image-container">
@@ -133,6 +134,20 @@
         <p class="modal__preview-image-caption"></p>
       </div>
     </div>
+
+    <!-- ------------------- Card Delete Confirmation Modal -------------------- -->
+
+    <div class="modal" id="card-delete-confirm-modal">
+      <div class="modal__container">
+        <button class="modal__close" type="button"></button>
+        <h3 class="modal__heading">Are you sure?</h3>
+        <form class="modal__form" novalidate>
+          <button class="modal__button" type="submit">Yes</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- ---------------------------- Card Template ---------------------------- -->
 
     <template id="card-template">
       <li class="card">

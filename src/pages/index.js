@@ -10,6 +10,7 @@ import UserInfo from "../components/UserInfo.js";
 /* -------------------------------------------------------------------------- */
 /*                                  Variables                                 */
 /* -------------------------------------------------------------------------- */
+const cl = console.log.bind(console);
 
 const profEditBtn = document.querySelector("#profile-edit-button");
 const profEditModal = document.querySelector("#profile-edit-modal");
@@ -111,3 +112,15 @@ cardAddBtn.addEventListener("click", () => {
   addFormValidator.resetModalValidity();
   addCardModal.open();
 });
+
+cl("console log bind test");
+
+// fetch("https://around-api.en.tripleten-services.com/v1", {
+//   headers: {
+//     authorization: "77ee804c-39c3-42bc-b729-7421efe9214e",
+//   },
+// })
+//   .then((res) => res.json())
+//   .then((result) => {
+//     console.log(result);
+//   });
