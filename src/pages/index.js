@@ -6,6 +6,7 @@ import PopupWithImage from "../components/PopupWithImage.js";
 import Card from "../components/Card.js";
 import { FormValidator, config } from "../components/FormValidator.js";
 import UserInfo from "../components/UserInfo.js";
+import Api from "../components/Api.js";
 
 /* -------------------------------------------------------------------------- */
 /*                                  Variables                                 */
@@ -26,7 +27,7 @@ const cardAddBtn = document.querySelector("#card-add-button");
 const cardAddForm = cardAddModal.querySelector(".modal__form");
 
 /* -------------------------------------------------------------------------- */
-/*                                    Loops & Class Instances                 */
+/*                              Class Instances                 */
 /* -------------------------------------------------------------------------- */
 const userInfo = new UserInfo(profTitle, profDesc);
 
@@ -54,6 +55,19 @@ const editFormValidator = new FormValidator(config, profEditForm);
 
 const addFormValidator = new FormValidator(config, cardAddForm);
 
+const api = new Api({
+  baseUrl: "https://around-api.en.tripleten-services.com/v1",
+  headers: {
+    authorization: "971c48ee-b7d1-41de-9c33-4a4541a40a56",
+    "Content-Type": "application/json",
+  },
+});
+
+/* -------------------------------------------------------------------------- */
+/*                                  API Calls                                 */
+/* -------------------------------------------------------------------------- */
+
+api.getInitialCards().then((res) => cl(res));
 /* -------------------------------------------------------------------------- */
 /*                                  Functions                                 */
 /* -------------------------------------------------------------------------- */
@@ -79,6 +93,10 @@ function handleAddCardSubmit(inputValues) {
   const card = renderCard({ name: title, link: url });
   section.addItem(card);
   addCardModal.close();
+}
+
+function openAddModal() {
+  addCardModal.open();
 }
 
 /* -------------------------------------------------------------------------- */
@@ -112,15 +130,3 @@ cardAddBtn.addEventListener("click", () => {
   addFormValidator.resetModalValidity();
   addCardModal.open();
 });
-
-cl("console log bind test");
-
-// fetch("https://around-api.en.tripleten-services.com/v1", {
-//   headers: {
-//     authorization: "77ee804c-39c3-42bc-b729-7421efe9214e",
-//   },
-// })
-//   .then((res) => res.json())
-//   .then((result) => {
-//     console.log(result);
-//   });
