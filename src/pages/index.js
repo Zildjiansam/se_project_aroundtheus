@@ -1,5 +1,5 @@
 import Section from "../components/Section.js";
-import { initialCards } from "../utils/constants.js";
+// import { initialCards } from "../utils/constants.js";
 import "./index.css";
 import PopupWithForm from "../components/PopupWithForm.js";
 import PopupWithImage from "../components/PopupWithImage.js";
@@ -7,6 +7,7 @@ import Card from "../components/Card.js";
 import { FormValidator, config } from "../components/FormValidator.js";
 import UserInfo from "../components/UserInfo.js";
 import Api from "../components/Api.js";
+import PopupWithDelete from "../components/PopupWithDelete.js";
 
 /* -------------------------------------------------------------------------- */
 /*                                  Variables                                 */
@@ -31,16 +32,16 @@ const cardAddForm = cardAddModal.querySelector(".modal__form");
 /* -------------------------------------------------------------------------- */
 const userInfo = new UserInfo(profTitle, profDesc);
 
-const section = new Section(
-  {
-    items: initialCards,
-    renderer: (item) => {
-      const cardElement = renderCard(item);
-      section.addItem(cardElement);
-    },
-  },
-  cardListEl
-);
+// const section = new Section(
+//   {
+//     items: initialCards,
+// renderer: (item) => {
+//   const cardElement = renderCard(item);
+//   section.addItem(cardElement);
+// },
+//   },
+//   cardListEl
+// );
 
 const editProfModal = new PopupWithForm(
   "#profile-edit-modal",
@@ -48,6 +49,8 @@ const editProfModal = new PopupWithForm(
 );
 
 const addCardModal = new PopupWithForm("#card-add-modal", handleAddCardSubmit);
+
+const deleteCardModal = new PopupWithDelete("#card-delete-confirm-modal");
 
 const prevImageModal = new PopupWithImage("#image-preview-modal");
 
@@ -66,8 +69,24 @@ const api = new Api({
 /* -------------------------------------------------------------------------- */
 /*                                  API Calls                                 */
 /* -------------------------------------------------------------------------- */
-
-api.getInitialCards().then((res) => cl(res));
+let section;
+api
+  .getInitialCards()
+  .then((res) => {
+    section = new Section(
+      {
+        items: res,
+        renderer: (cardData) => {
+          const cardElement = renderCard(cardData);
+          section.addItem(cardElement);
+        },
+      },
+      cardListEl
+    );
+    section.renderItems();
+    cl(res);
+  })
+  .catch(console.error);
 /* -------------------------------------------------------------------------- */
 /*                                  Functions                                 */
 /* -------------------------------------------------------------------------- */
@@ -77,7 +96,13 @@ function handleImageClick(cardData) {
 }
 
 function renderCard(cardData) {
-  const card = new Card(cardData, "#card-template", handleImageClick);
+  const card = new Card(
+    cardData,
+    "#card-template",
+    handleImageClick,
+    deleteCardModal,
+    api
+  );
   return card.getCardEl();
 }
 
@@ -90,7 +115,9 @@ function handleProfEditSubmit(profileData) {
 function handleAddCardSubmit(inputValues) {
   // e.preventDefault();
   const { title, url } = inputValues;
-  const card = renderCard({ name: title, link: url });
+  const cardData = { name: title, link: url };
+  const card = renderCard(cardData);
+  api.addNewCard(cardData);
   section.addItem(card);
   addCardModal.close();
 }
@@ -107,13 +134,15 @@ editFormValidator.enableValidation();
 
 addFormValidator.enableValidation();
 
-section.renderItems();
+// section.renderItems();
 
 editProfModal.setEventListeners();
 
 addCardModal.setEventListeners();
 
 prevImageModal.setEventListeners();
+
+deleteCardModal.setEventListeners();
 
 /* -------------------------- Profile Button Listeners ------------------------- */
 
@@ -128,5 +157,5 @@ profEditBtn.addEventListener("click", () => {
 /* -------------------------- Card Button Listeners ------------------------- */
 cardAddBtn.addEventListener("click", () => {
   addFormValidator.resetModalValidity();
-  addCardModal.open();
+  openAddModal();
 });
