@@ -8,7 +8,6 @@ import Card from "../components/Card.js";
 import { FormValidator, config } from "../components/FormValidator.js";
 import UserInfo from "../components/UserInfo.js";
 import Api from "../components/Api.js";
-import PopupWithDelete from "../components/PopupWithDelete.js";
 
 /* -------------------------------------------------------------------------- */
 /*                                  Variables                                 */
@@ -85,8 +84,8 @@ function handleImageClick(cardData) {
   prevImageModal.open(cardData);
 }
 
-//Function below is deleting the cardID from server but not from page and Card delete
-//modal is not closing
+//Function below is deleting the cardID from server but not from page &
+//Card Delete modal is not closing
 function renderCard(cardData) {
   const card = new Card(
     cardData,
@@ -130,8 +129,6 @@ editFormValidator.enableValidation();
 
 addFormValidator.enableValidation();
 
-// section.renderItems();
-
 editProfModal.setEventListeners();
 
 addCardModal.setEventListeners();
@@ -153,5 +150,5 @@ profEditBtn.addEventListener("click", () => {
 /* -------------------------- Card Button Listeners ------------------------- */
 cardAddBtn.addEventListener("click", () => {
   addFormValidator.resetModalValidity();
-  openAddModal();
+  addCardModal.open();
 });
