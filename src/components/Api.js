@@ -1,37 +1,34 @@
 export default class Api {
   constructor(options) {
-    this.headers = options.headers;
+    this._url = options.baseUrl;
+    this._headers = options.headers;
+  }
+
+  _checkResponse(res) {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Error: ${res.status}`);
   }
 
   getInitialCards() {
-    return fetch("https://around-api.en.tripleten-services.com/v1/cards", {
-      headers: {
-        authorization: "971c48ee-b7d1-41de-9c33-4a4541a40a56",
-      },
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Error: ${res.status}`);
-    });
+    return fetch(`${this._url}/cards`, {
+      headers: this._headers,
+    }).then(this._checkResponse);
   }
 
   addNewCard(data) {
-    return fetch("https://around-api.en.tripleten-services.com/v1/cards", {
+    return fetch(`${this._url}/cards`, {
       method: "POST",
-      headers: {
-        authorization: "971c48ee-b7d1-41de-9c33-4a4541a40a56",
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({
-        name: data.name,
-        link: data.link,
-      }),
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Error: ${res.status}`);
-    });
+      headers: this._headers,
+      body: JSON.stringify(data),
+    }).then(this._checkResponse);
+  }
+
+  deleteCard(cardId) {
+    return fetch(`${this._url}/cards/${cardId}`, {
+      method: "DELETE",
+      headers: this._headers,
+    }).then(this._checkResponse);
   }
 }

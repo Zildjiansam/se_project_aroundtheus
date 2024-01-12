@@ -21,7 +21,6 @@
 .modal__container {
   box-sizing: border-box;
   width: 430px;
-  height: 350px;
   flex-shrink: 0;
   background: #fff;
   border-radius: 10px;
@@ -37,7 +36,7 @@
   line-height: normal;
 }
 
-.modal__container:last-of-type {
+modal:last-of-type:first-child {
   height: 181px;
   padding: 28px 36px 34px;
 }

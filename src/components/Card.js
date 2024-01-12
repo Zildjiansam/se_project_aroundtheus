@@ -1,9 +1,11 @@
 export default class Card {
-  constructor(data, cardSelector, handleImageClick) {
+  constructor(data, cardSelector, handleImageClick, handleDeleteBtn) {
     this._name = data.name;
     this._link = data.link;
+    this._id = data._id;
     this._cardSelector = cardSelector;
     this._handleImageClick = handleImageClick;
+    this._handleDeleteBtn = handleDeleteBtn;
   }
 
   _setEventListeners() {
@@ -14,7 +16,7 @@ export default class Card {
     //card "delete" button
     this._cardElement
       .querySelector(".card__delete-button")
-      .addEventListener("click", () => this._handleDeleteCard());
+      .addEventListener("click", () => this._handleDeleteBtn(this));
     //prev image click
     this._cardElement
       .querySelector(".card__image")
@@ -23,7 +25,13 @@ export default class Card {
       });
   }
 
-  _handleDeleteCard() {
+  getId() {
+    const id = this._id;
+    console.log(id);
+    return id;
+  }
+
+  handleDeleteCard() {
     this._cardElement.remove();
     this._cardElement = null;
   }

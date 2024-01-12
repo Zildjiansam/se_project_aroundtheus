@@ -1,8 +1,9 @@
 import Section from "../components/Section.js";
-import { initialCards } from "../utils/constants.js";
+// import { initialCards } from "../utils/constants.js";
 import "./index.css";
 import PopupWithForm from "../components/PopupWithForm.js";
 import PopupWithImage from "../components/PopupWithImage.js";
+import PopupWithDelete from "../components/PopupWithDelete.js";
 import Card from "../components/Card.js";
 import { FormValidator, config } from "../components/FormValidator.js";
 import UserInfo from "../components/UserInfo.js";
@@ -31,16 +32,16 @@ const cardAddForm = cardAddModal.querySelector(".modal__form");
 /* -------------------------------------------------------------------------- */
 const userInfo = new UserInfo(profTitle, profDesc);
 
-const section = new Section(
-  {
-    items: initialCards,
-    renderer: (item) => {
-      const cardElement = renderCard(item);
-      section.addItem(cardElement);
-    },
-  },
-  cardListEl
-);
+// const section = new Section(
+//   {
+//     items: res,
+//     renderer: (item) => {
+//       const cardElement = renderCard(item);
+//       section.addItem(cardElement);
+//     },
+//   },
+//   cardListEl
+// );
 
 const editProfModal = new PopupWithForm(
   "#profile-edit-modal",
@@ -51,6 +52,8 @@ const addCardModal = new PopupWithForm("#card-add-modal", handleAddCardSubmit);
 
 const prevImageModal = new PopupWithImage("#image-preview-modal");
 
+const deleteCardModal = new PopupWithDelete("#card-delete-confirm-modal");
+
 const editFormValidator = new FormValidator(config, profEditForm);
 
 const addFormValidator = new FormValidator(config, cardAddForm);
@@ -58,7 +61,7 @@ const addFormValidator = new FormValidator(config, cardAddForm);
 const api = new Api({
   baseUrl: "https://around-api.en.tripleten-services.com/v1",
   headers: {
-    authorization: "971c48ee-b7d1-41de-9c33-4a4541a40a56",
+    authorization: "e4d91a75-4cb0-43d1-85cd-37dfda4c3b7e",
     "Content-Type": "application/json",
   },
 });
@@ -67,7 +70,24 @@ const api = new Api({
 /*                                  API Calls                                 */
 /* -------------------------------------------------------------------------- */
 
-api.getInitialCards().then((res) => cl(res));
+let section;
+api
+  .getInitialCards()
+  .then((res) => {
+    section = new Section(
+      {
+        items: res,
+        renderer: (cardData) => {
+          const cardElement = renderCard(cardData);
+          section.addItem(cardElement);
+        },
+      },
+      cardListEl
+    );
+    section.renderItems();
+    cl(res);
+  })
+  .catch(console.error);
 /* -------------------------------------------------------------------------- */
 /*                                  Functions                                 */
 /* -------------------------------------------------------------------------- */
@@ -76,8 +96,24 @@ function handleImageClick(cardData) {
   prevImageModal.open(cardData);
 }
 
+//Function below is deleting the cardID from server but not from page and Card delete
+//modal is not closing
 function renderCard(cardData) {
-  const card = new Card(cardData, "#card-template", handleImageClick);
+  const card = new Card(
+    cardData,
+    "#card-template",
+    handleImageClick,
+    function deleteBtnClick(cardInstance) {
+      deleteCardModal.open();
+      cl(cardInstance.getId);
+      deleteCardModal.setSubmitAction(() => {
+        api.deleteCard(cardInstance.getId()).then(() => {
+          deleteCardModal.close();
+          cardInstance.handleDeleteCard();
+        });
+      });
+    }
+  );
   return card.getCardEl();
 }
 
@@ -90,13 +126,11 @@ function handleProfEditSubmit(profileData) {
 function handleAddCardSubmit(inputValues) {
   // e.preventDefault();
   const { title, url } = inputValues;
-  const card = renderCard({ name: title, link: url });
+  const cardData = { name: title, link: url };
+  const card = renderCard(cardData);
+  api.addNewCard(cardData);
   section.addItem(card);
   addCardModal.close();
-}
-
-function openAddModal() {
-  addCardModal.open();
 }
 
 /* -------------------------------------------------------------------------- */
@@ -107,13 +141,13 @@ editFormValidator.enableValidation();
 
 addFormValidator.enableValidation();
 
-section.renderItems();
-
 editProfModal.setEventListeners();
 
 addCardModal.setEventListeners();
 
 prevImageModal.setEventListeners();
+
+deleteCardModal.setEventListeners();
 
 /* -------------------------- Profile Button Listeners ------------------------- */
 
