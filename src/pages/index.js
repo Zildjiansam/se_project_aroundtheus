@@ -8,6 +8,7 @@ import Card from "../components/Card.js";
 import { FormValidator, config } from "../components/FormValidator.js";
 import UserInfo from "../components/UserInfo.js";
 import Api from "../components/Api.js";
+import PopupWithDelete from "../components/PopupWithDelete.js";
 
 /* -------------------------------------------------------------------------- */
 /*                                  Variables                                 */
@@ -31,17 +32,6 @@ const cardAddForm = cardAddModal.querySelector(".modal__form");
 /*                              Class Instances                 */
 /* -------------------------------------------------------------------------- */
 const userInfo = new UserInfo(profTitle, profDesc);
-
-// const section = new Section(
-//   {
-//     items: res,
-//     renderer: (item) => {
-//       const cardElement = renderCard(item);
-//       section.addItem(cardElement);
-//     },
-//   },
-//   cardListEl
-// );
 
 const editProfModal = new PopupWithForm(
   "#profile-edit-modal",
@@ -69,7 +59,6 @@ const api = new Api({
 /* -------------------------------------------------------------------------- */
 /*                                  API Calls                                 */
 /* -------------------------------------------------------------------------- */
-
 let section;
 api
   .getInitialCards()
@@ -141,6 +130,8 @@ editFormValidator.enableValidation();
 
 addFormValidator.enableValidation();
 
+// section.renderItems();
+
 editProfModal.setEventListeners();
 
 addCardModal.setEventListeners();
@@ -162,5 +153,5 @@ profEditBtn.addEventListener("click", () => {
 /* -------------------------- Card Button Listeners ------------------------- */
 cardAddBtn.addEventListener("click", () => {
   addFormValidator.resetModalValidity();
-  addCardModal.open();
+  openAddModal();
 });

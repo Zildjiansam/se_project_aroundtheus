@@ -36,7 +36,7 @@
   line-height: normal;
 }
 
-modal:last-of-type:first-child {
+.modal:last-of-type:first-child {
   height: 181px;
   padding: 28px 36px 34px;
 }
