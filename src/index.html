@@ -19,20 +19,17 @@
       </header>
       <main class="content">
         <section class="profile page__section">
-          <img
-            src="<%=require('./images/jacques-cousteau.jpg')%>"
-            alt="Avatar"
-            class="profile__image"
-          />
+          <img alt="Avatar" class="profile__image" />
+          <button class="profile__image_edit-button" type="button"></button>
           <div class="profile__info">
-            <h1 class="profile__title">Jacques Cousteau</h1>
+            <h1 class="profile__title"></h1>
             <button
               class="profile__edit-button"
               id="profile-edit-button"
               type="button"
               aria-label="edit"
             ></button>
-            <p class="profile__description">Explorer</p>
+            <p class="profile__description"></p>
           </div>
           <button
             class="profile__card-add-button"
@@ -48,6 +45,32 @@
       <footer class="footer page__section">
         <p class="footer__text">&#64; 2023 Around The U.S.</p>
       </footer>
+    </div>
+
+    <!-- ------------------------- Update Avatar Modal ---------------------- -->
+
+    <div class="modal" id="update-avatar-modal">
+      <div class="modal__container">
+        <button class="modal__close" type="button"></button>
+        <h3 class="modal__heading">Change profile picture</h3>
+        <form class="modal__form" novalidate>
+          <input
+            type="url"
+            name="avatar"
+            class="modal__input"
+            id="edit_modal-input-avatar"
+            placeholder="URL"
+            minlength="2"
+            maxlength="40"
+            required
+          />
+          <span
+            class="modal__input-error"
+            id="edit_modal-input-name-error"
+          ></span>
+          <button class="modal__button" type="submit">Save</button>
+        </form>
+      </div>
     </div>
 
     <!-- ------------------------- Edit Profile Modal ------------------------------ -->
@@ -169,3 +192,5 @@
     </template>
   </body>
 </html>
+
+<!-- src="<%=require('./images/jacques-cousteau.jpg')%>" -->

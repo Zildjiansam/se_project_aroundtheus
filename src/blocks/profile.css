@@ -12,6 +12,10 @@
   margin: 3px 24px 3px 0;
 }
 
+.profile__image_edit-button {
+  background: transparent url();
+}
+
 .profile__info {
   display: grid;
   grid-template-areas:

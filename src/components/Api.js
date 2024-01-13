@@ -2,8 +2,6 @@ export default class Api {
   constructor(options) {
     this._url = options.baseUrl;
     this._headers = options.headers;
-    this._url = options.baseUrl;
-    this._headers = options.headers;
   }
 
   _checkResponse(res) {
@@ -11,6 +9,20 @@ export default class Api {
       return res.json();
     }
     return Promise.reject(`Error: ${res.status}`);
+  }
+
+  loadUserInfo() {
+    return fetch(`${this._url}/users/me`, {
+      headers: this._headers,
+    }).then(this._checkResponse);
+  }
+
+  updateUserAvatar(url) {
+    return fetch(`${this._url}/users/me/avatar`, {
+      method: "PATCH",
+      headers: this._headers,
+      body: JSON.stringify(url),
+    }).then(this._checkResponse);
   }
 
   getInitialCards() {

@@ -6,7 +6,6 @@ export default class Popup {
   }
 
   open(card) {
-    this.card = card;
     this._modalElement.classList.add("modal__opened");
     document.addEventListener("keydown", this._handleEscClose);
   }
