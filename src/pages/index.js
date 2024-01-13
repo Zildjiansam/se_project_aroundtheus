@@ -22,6 +22,7 @@ const profEditNameInput = document.querySelector("#edit_modal-input-name");
 const profEditDescInput = document.querySelector("#edit-modal-input-desc");
 const profEditForm = profEditModal.querySelector(".modal__form");
 const profImage = document.querySelector(".profile__image");
+const profAvatarEditBtn = document.querySelector(".profile__image_edit-button");
 
 const cardListEl = document.querySelector(".cards__list");
 const cardAddModal = document.querySelector("#card-add-modal");
@@ -175,6 +176,10 @@ profEditBtn.addEventListener("click", () => {
   profEditDescInput.value = description;
   editFormValidator.resetModalValidity();
   editProfModal.open();
+});
+
+profAvatarEditBtn.addEventListener("click", () => {
+  avatarUpdateModal.open();
 });
 
 /* -------------------------- Card Button Listeners ------------------------- */
