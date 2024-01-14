@@ -29,6 +29,9 @@ const cardAddModal = document.querySelector("#card-add-modal");
 const cardAddBtn = document.querySelector("#card-add-button");
 const cardAddForm = cardAddModal.querySelector(".modal__form");
 
+const updateAvatarModal = document.querySelector("#update-avatar-modal");
+const updateAvatarForm = updateAvatarModal.querySelector(".modal__form");
+
 /* -------------------------------------------------------------------------- */
 /*                              Class Instances                 */
 /* -------------------------------------------------------------------------- */
@@ -39,7 +42,10 @@ const editProfModal = new PopupWithForm(
   handleProfEditSubmit
 );
 
-const avatarUpdateModal = new PopupWithForm("#update-avatar-modal");
+const avatarUpdateModal = new PopupWithForm(
+  "#update-avatar-modal",
+  handleAvatarUpdate
+);
 
 const addCardModal = new PopupWithForm("#card-add-modal", handleAddCardSubmit);
 
@@ -50,6 +56,8 @@ const deleteCardModal = new PopupWithDelete("#card-delete-confirm-modal");
 const editFormValidator = new FormValidator(config, profEditForm);
 
 const addFormValidator = new FormValidator(config, cardAddForm);
+
+const avatarUpdateValidator = new FormValidator(config, updateAvatarForm);
 
 const api = new Api({
   baseUrl: "https://around-api.en.tripleten-services.com/v1",
@@ -125,12 +133,16 @@ function renderCard(cardData) {
   return card.getCardEl();
 }
 
-function handleAvatarUpdate(url) {}
+function handleAvatarUpdate(inputValue) {
+  api.updateUserAvatar(inputValue).then((res) => {
+    avatarUpdateModal.close();
+    userInfo.setUserAvatar(res.avatar);
+  });
+}
 
 function handleProfEditSubmit(profileData) {
   // e.preventDefault();
   userInfo.setUserInfo(profileData.title, profileData.description);
-  // userInfo.setUserAvatar(profile);
   editProfModal.close();
 }
 
@@ -157,6 +169,8 @@ function handleAddCardSubmit(inputValues) {
 editFormValidator.enableValidation();
 
 addFormValidator.enableValidation();
+
+avatarUpdateValidator.enableValidation();
 
 avatarUpdateModal.setEventListeners();
 
