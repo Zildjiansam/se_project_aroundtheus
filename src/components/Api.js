@@ -11,6 +11,14 @@ export default class Api {
     return Promise.reject(`Error: ${res.status}`);
   }
 
+  updateUserAvatar(url) {
+    return fetch(`${this._url}/users/me/avatar`, {
+      method: "PATCH",
+      headers: this._headers,
+      body: JSON.stringify(url),
+    }).then(this._checkResponse);
+  }
+
   loadUserInfo() {
     return fetch(`${this._url}/users/me`, {
       headers: this._headers,
@@ -25,14 +33,6 @@ export default class Api {
         name: data.name,
         about: data.about,
       }),
-    }).then(this._checkResponse);
-  }
-
-  updateUserAvatar(url) {
-    return fetch(`${this._url}/users/me/avatar`, {
-      method: "PATCH",
-      headers: this._headers,
-      body: JSON.stringify(url),
     }).then(this._checkResponse);
   }
 
@@ -55,6 +55,20 @@ export default class Api {
 
   deleteCard(cardId) {
     return fetch(`${this._url}/cards/${cardId}`, {
+      method: "DELETE",
+      headers: this._headers,
+    }).then(this._checkResponse);
+  }
+
+  addCardLike(cardId) {
+    return fetch(`${this._url}/cards/${cardId}/likes`, {
+      method: "PUT",
+      headers: this._headers,
+    }).then(this._checkResponse);
+  }
+
+  removeCardLike(cardId) {
+    return fetch(`${this._url}/cards/${cardId}/likes`, {
       method: "DELETE",
       headers: this._headers,
     }).then(this._checkResponse);

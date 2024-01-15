@@ -106,16 +106,12 @@ api
 /*                                  Functions                                 */
 /* -------------------------------------------------------------------------- */
 
-function handleImageClick(cardData) {
-  prevImageModal.open(cardData);
-}
-
 function renderCard(cardData) {
   const card = new Card(
     cardData,
     "#card-template",
     handleImageClick,
-    function deleteBtnClick(cardInstance) {
+    function handleDelBtn(cardInstance) {
       deleteCardModal.open();
       deleteCardModal.setSubmitAction(() => {
         api
@@ -128,10 +124,37 @@ function renderCard(cardData) {
             console.error(`Error ${err}`);
           });
       });
+    },
+    function handleAddLike(cardInstance) {
+      api
+        .addCardLike(cardInstance.getId())
+        .then((res) => {
+          cl(res);
+          card.toggleLikeButton();
+        })
+        .catch((err) => {
+          console.error(`Error ${err}`);
+        });
+    },
+    function handleDeleteLike(cardInstance) {
+      api
+        .removeCardLike(cardInstance.getId())
+        .then((res) => {
+          cl(res);
+          card.toggleLikeButton();
+        })
+        .catch((err) => {
+          console.error(`Error ${err}`);
+        });
     }
   );
   return card.getCardEl();
 }
+
+function handleImageClick(cardData) {
+  prevImageModal.open(cardData);
+}
+
 function handleProfInfoUpdate() {
   cl(userInfo.getUserInfo());
   api.updateUserInfo(userInfo.getUserInfo()).then((res) => {

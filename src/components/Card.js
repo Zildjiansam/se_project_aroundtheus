@@ -1,22 +1,40 @@
 export default class Card {
-  constructor(data, cardSelector, handleImageClick, handleDeleteBtn) {
+  constructor(
+    data,
+    cardSelector,
+    handleImageClick,
+    handleDeleteBtn,
+    handleAddLike,
+    handleDeleteLike
+  ) {
+    this._isLiked = data.isLiked;
     this._name = data.name;
     this._link = data.link;
     this._id = data._id;
     this._cardSelector = cardSelector;
     this._handleImageClick = handleImageClick;
     this._handleDeleteBtn = handleDeleteBtn;
+    this._handleAddLike = handleAddLike;
+    this._handleDeleteLike = handleDeleteLike;
   }
 
   _setEventListeners() {
     //card "like" button
     this._cardElement
       .querySelector(".card__heart-button")
-      .addEventListener("click", () => this._handleLikeButton());
+      .addEventListener("click", () => {
+        if (this._isLiked) {
+          this._handleDeleteLike(this);
+        } else {
+          this._handleAddLike(this);
+        }
+      });
+
     //card "delete" button
     this._cardElement
       .querySelector(".card__delete-button")
       .addEventListener("click", () => this._handleDeleteBtn(this));
+
     //prev image click
     this._cardElement
       .querySelector(".card__image")
@@ -36,7 +54,7 @@ export default class Card {
     this._cardElement = null;
   }
 
-  _handleLikeButton() {
+  toggleLikeButton() {
     this._cardElement
       .querySelector(".card__heart-button")
       .classList.toggle("card__heart-button_active");
@@ -49,6 +67,16 @@ export default class Card {
       .cloneNode(true);
     const cardImageEl = this._cardElement.querySelector(".card__image");
     const cardTitleEl = this._cardElement.querySelector(".card__title");
+
+    if (this._isLiked) {
+      this._cardElement
+        .querySelector(".card__heart-button")
+        .classList.add("card__heart-button_active");
+    } else {
+      this._cardElement
+        .querySelector(".card__heart-button")
+        .classList.remove("card__heart-button_active");
+    }
 
     cardTitleEl.textContent = this._name;
     cardImageEl.setAttribute("alt", this._name);
