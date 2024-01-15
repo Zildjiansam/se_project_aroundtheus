@@ -18,8 +18,8 @@ const profEditBtn = document.querySelector("#profile-edit-button");
 const profEditModal = document.querySelector("#profile-edit-modal");
 const profTitle = document.querySelector(".profile__title");
 const profDesc = document.querySelector(".profile__description");
-const profEditNameInput = document.querySelector("#edit_modal-input-name");
-const profEditDescInput = document.querySelector("#edit-modal-input-desc");
+// const profEditNameInput = document.querySelector("#edit_modal-input-name");
+// const profEditDescInput = document.querySelector("#edit-modal-input-desc");
 const profEditForm = profEditModal.querySelector(".modal__form");
 const profImage = document.querySelector(".profile__image");
 const profAvatarEditBtn = document.querySelector(".profile__image_edit-button");
@@ -132,6 +132,12 @@ function renderCard(cardData) {
   );
   return card.getCardEl();
 }
+function handleProfInfoUpdate() {
+  cl(userInfo.getUserInfo());
+  api.updateUserInfo(userInfo.getUserInfo()).then((res) => {
+    userInfo.setUserInfo(res.name, res.about);
+  });
+}
 
 function handleAvatarUpdate(inputValue) {
   api.updateUserAvatar(inputValue).then((res) => {
@@ -141,13 +147,12 @@ function handleAvatarUpdate(inputValue) {
 }
 
 function handleProfEditSubmit(profileData) {
-  // e.preventDefault();
   userInfo.setUserInfo(profileData.title, profileData.description);
+  handleProfInfoUpdate();
   editProfModal.close();
 }
 
 function handleAddCardSubmit(inputValues) {
-  // e.preventDefault();
   const { title, url } = inputValues;
   const cardData = { name: title, link: url };
   api
@@ -155,6 +160,7 @@ function handleAddCardSubmit(inputValues) {
     .then((cardData) => {
       const card = renderCard(cardData);
       section.addItem(card);
+      cl(JSON.stringify(cardData));
     })
     .catch((err) => {
       console.error(`Error ${err}`);
@@ -185,19 +191,23 @@ deleteCardModal.setEventListeners();
 /* -------------------------- Profile Button Listeners ------------------------- */
 
 profEditBtn.addEventListener("click", () => {
-  const { profileName, description } = userInfo.getUserInfo();
-  profEditNameInput.value = profileName;
-  profEditDescInput.value = description;
+  // const { profileName, description } = userInfo.getUserInfo();
+  // e.preventDefault();
+  // profEditNameInput.value = profileName;
+  // profEditDescInput.value = description;
+  // handleProfInfoUpdate();
   editFormValidator.resetModalValidity();
   editProfModal.open();
 });
 
-profAvatarEditBtn.addEventListener("click", () => {
+profAvatarEditBtn.addEventListener("click", (e) => {
+  e.preventDefault();
   avatarUpdateModal.open();
 });
 
 /* -------------------------- Card Button Listeners ------------------------- */
-cardAddBtn.addEventListener("click", () => {
+cardAddBtn.addEventListener("click", (e) => {
+  e.preventDefault();
   addFormValidator.resetModalValidity();
   addCardModal.open();
 });
