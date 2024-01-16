@@ -1,5 +1,4 @@
 import Section from "../components/Section.js";
-// import { initialCards } from "../utils/constants.js";
 import "./index.css";
 import PopupWithForm from "../components/PopupWithForm.js";
 import PopupWithImage from "../components/PopupWithImage.js";
@@ -21,6 +20,7 @@ const profDesc = document.querySelector(".profile__description");
 // const profEditNameInput = document.querySelector("#edit_modal-input-name");
 // const profEditDescInput = document.querySelector("#edit-modal-input-desc");
 const profEditForm = profEditModal.querySelector(".modal__form");
+const profEditSaveBtn = profEditForm.querySelector(".modal__button");
 const profImage = document.querySelector(".profile__image");
 const profAvatarEditBtn = document.querySelector(".profile__image_edit-button");
 
@@ -28,9 +28,15 @@ const cardListEl = document.querySelector(".cards__list");
 const cardAddModal = document.querySelector("#card-add-modal");
 const cardAddBtn = document.querySelector("#card-add-button");
 const cardAddForm = cardAddModal.querySelector(".modal__form");
+const cardAddSaveBtn = cardAddForm.querySelector(".modal__button");
+const cardDelConfirmModal = document.querySelector(
+  "#card-delete-confirm-modal"
+);
+const cardDelConfirmBtn = cardDelConfirmModal.querySelector(".modal__button");
 
 const updateAvatarModal = document.querySelector("#update-avatar-modal");
 const updateAvatarForm = updateAvatarModal.querySelector(".modal__form");
+const updateAvatarSaveBtn = updateAvatarModal.querySelector(".modal__button");
 
 /* -------------------------------------------------------------------------- */
 /*                              Class Instances                 */
@@ -114,6 +120,7 @@ function renderCard(cardData) {
     function handleDelBtn(cardInstance) {
       deleteCardModal.open();
       deleteCardModal.setSubmitAction(() => {
+        loadingNotification(profEditSaveBtn);
         api
           .deleteCard(cardInstance.getId())
           .then(() => {
@@ -122,6 +129,9 @@ function renderCard(cardData) {
           })
           .catch((err) => {
             console.error(`Error ${err}`);
+          })
+          .finally(() => {
+            loadingNotification(cardDelConfirmBtn);
           });
       });
     },
@@ -156,17 +166,39 @@ function handleImageClick(cardData) {
 }
 
 function handleProfInfoUpdate() {
+  loadingNotification(profEditSaveBtn);
+  // let oldBtnText = profEditSaveBtn.textContent;
+  // profEditSaveBtn.textContent = "Saving...";
   cl(userInfo.getUserInfo());
-  api.updateUserInfo(userInfo.getUserInfo()).then((res) => {
-    userInfo.setUserInfo(res.name, res.about);
-  });
+  api
+    .updateUserInfo(userInfo.getUserInfo())
+    .then((res) => {
+      userInfo.setUserInfo(res.name, res.about);
+    })
+    .catch((err) => {
+      console.error(`Error ${err}`);
+    })
+    .finally(() => {
+      loadingNotification(false, profEditSaveBtn);
+      editProfModal.close();
+      // profEditSaveBtn.textContent = oldBtnText;
+    });
 }
 
 function handleAvatarUpdate(inputValue) {
-  api.updateUserAvatar(inputValue).then((res) => {
-    avatarUpdateModal.close();
-    userInfo.setUserAvatar(res.avatar);
-  });
+  loadingNotification(updateAvatarSaveBtn);
+  api
+    .updateUserAvatar(inputValue)
+    .then((res) => {
+      avatarUpdateModal.close();
+      userInfo.setUserAvatar(res.avatar);
+    })
+    .catch((err) => {
+      console.error(`Error ${err}`);
+    })
+    .finally(() => {
+      loadingNotification(updateAvatarSaveBtn);
+    });
 }
 
 function handleProfEditSubmit(profileData) {
@@ -176,6 +208,7 @@ function handleProfEditSubmit(profileData) {
 }
 
 function handleAddCardSubmit(inputValues) {
+  loadingNotification(cardAddSaveBtn);
   const { title, url } = inputValues;
   const cardData = { name: title, link: url };
   api
@@ -187,8 +220,17 @@ function handleAddCardSubmit(inputValues) {
     })
     .catch((err) => {
       console.error(`Error ${err}`);
+    })
+    .finally(() => {
+      loadingNotification(cardAddSaveBtn);
     });
+  editFormValidator.resetModalValidity();
   addCardModal.close();
+}
+
+function loadingNotification(button, loadingText = "Saving...") {
+  cl("SAVE");
+  button.textContent = loadingText;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -214,11 +256,6 @@ deleteCardModal.setEventListeners();
 /* -------------------------- Profile Button Listeners ------------------------- */
 
 profEditBtn.addEventListener("click", () => {
-  // const { profileName, description } = userInfo.getUserInfo();
-  // e.preventDefault();
-  // profEditNameInput.value = profileName;
-  // profEditDescInput.value = description;
-  // handleProfInfoUpdate();
   editFormValidator.resetModalValidity();
   editProfModal.open();
 });
