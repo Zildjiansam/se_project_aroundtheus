@@ -57,12 +57,6 @@ export default class Card {
     return this._isLiked;
   }
 
-  toggleLikeButton() {
-    this._cardElement
-      .querySelector(".card__heart-button")
-      .classList.toggle("card__heart-button_active");
-  }
-
   _renderLikes() {
     if (this._isLiked) {
       this._cardElement

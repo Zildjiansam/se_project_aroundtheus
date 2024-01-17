@@ -11,7 +11,7 @@ import Api from "../components/Api.js";
 /* -------------------------------------------------------------------------- */
 /*                                  Variables                                 */
 /* -------------------------------------------------------------------------- */
-const cl = console.log.bind(console);
+// const cl = console.log.bind(console);
 
 const profEditBtn = document.querySelector("#profile-edit-button");
 const profEditModal = document.querySelector("#profile-edit-modal");
@@ -20,7 +20,6 @@ const profDesc = document.querySelector(".profile__description");
 const profEditNameInput = document.querySelector("#edit_modal-input-name");
 const profEditDescInput = document.querySelector("#edit-modal-input-desc");
 const profEditForm = profEditModal.querySelector(".modal__form");
-const profEditSaveBtn = profEditForm.querySelector(".modal__button");
 const profImage = document.querySelector(".profile__image");
 const profAvatarEditBtn = document.querySelector(".profile__image_edit-button");
 
@@ -28,15 +27,9 @@ const cardListEl = document.querySelector(".cards__list");
 const cardAddModal = document.querySelector("#card-add-modal");
 const cardAddBtn = document.querySelector("#card-add-button");
 const cardAddForm = cardAddModal.querySelector(".modal__form");
-// const cardAddSaveBtn = cardAddForm.querySelector(".modal__button");
-const cardDelConfirmModal = document.querySelector(
-  "#card-delete-confirm-modal"
-);
-const cardDelConfirmBtn = cardDelConfirmModal.querySelector(".modal__button");
 
 const updateAvatarModal = document.querySelector("#update-avatar-modal");
 const updateAvatarForm = updateAvatarModal.querySelector(".modal__form");
-// const updateAvatarSaveBtn = updateAvatarModal.querySelector(".modal__button");
 
 /* -------------------------------------------------------------------------- */
 /*                              Class Instances                 */
@@ -45,7 +38,7 @@ const userInfo = new UserInfo(profTitle, profDesc, profImage);
 
 const editProfModal = new PopupWithForm(
   "#profile-edit-modal",
-  handleProfEditSubmit
+  handleProfInfoUpdate
 );
 
 const avatarUpdateModal = new PopupWithForm(
@@ -96,11 +89,17 @@ function renderCard(cardData) {
         api
           .deleteCard(cardInstance.getId())
           .then(() => {
+            deleteCardModal.showLoading(true);
             deleteCardModal.close();
             cardInstance.handleDeleteCard();
           })
           .catch((err) => {
             console.error(`Error ${err}`);
+          })
+          .finally(() => {
+            setTimeout(() => {
+              deleteCardModal.showLoading(false);
+            }, 1000);
           });
       });
     },
@@ -144,7 +143,6 @@ function getInitalCards() {
         cardListEl
       );
       section.renderItems();
-      cl(res);
     })
     .catch((err) => {
       console.error(`Error ${err}`);
@@ -155,7 +153,6 @@ function getInitialInfo() {
   api
     .loadUserInfo()
     .then((res) => {
-      cl(res);
       userInfo.setUserInfo(res.name, res.about);
       userInfo.setUserAvatar(res.avatar);
     })
@@ -168,14 +165,13 @@ function handleImageClick(cardData) {
   prevImageModal.open(cardData);
 }
 
-function handleProfInfoUpdate() {
+function handleProfInfoUpdate(profileData) {
   editProfModal.showLoading(true);
-  cl(userInfo.getUserInfo());
+  userInfo.setUserInfo(profileData.title, profileData.description);
   api
     .updateUserInfo(userInfo.getUserInfo())
     .then((res) => {
       userInfo.setUserInfo(res.name, res.about);
-      showLoading(false, profEditSaveBtn);
       editProfModal.close();
     })
     .catch((err) => {
@@ -204,12 +200,6 @@ function handleAvatarUpdate(inputValue) {
         avatarUpdateModal.showLoading(false);
       }, 1000);
     });
-}
-
-function handleProfEditSubmit(profileData) {
-  userInfo.setUserInfo(profileData.title, profileData.description);
-  handleProfInfoUpdate();
-  editProfModal.close();
 }
 
 function handleAddCardSubmit(inputValues) {
