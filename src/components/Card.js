@@ -4,8 +4,7 @@ export default class Card {
     cardSelector,
     handleImageClick,
     handleDeleteBtn,
-    handleAddLike,
-    handleDeleteLike
+    handleLikes
   ) {
     this._isLiked = data.isLiked;
     this._name = data.name;
@@ -14,8 +13,7 @@ export default class Card {
     this._cardSelector = cardSelector;
     this._handleImageClick = handleImageClick;
     this._handleDeleteBtn = handleDeleteBtn;
-    this._handleAddLike = handleAddLike;
-    this._handleDeleteLike = handleDeleteLike;
+    this._handleLikes = handleLikes;
   }
 
   _setEventListeners() {
@@ -23,11 +21,7 @@ export default class Card {
     this._cardElement
       .querySelector(".card__heart-button")
       .addEventListener("click", () => {
-        if (this._isLiked) {
-          this._handleDeleteLike(this);
-        } else {
-          this._handleAddLike(this);
-        }
+        this._handleLikes(this);
       });
 
     //card "delete" button
@@ -54,20 +48,22 @@ export default class Card {
     this._cardElement = null;
   }
 
+  setIsLiked(isLiked) {
+    this._isLiked = isLiked;
+    this._renderLikes();
+  }
+
+  isLiked() {
+    return this._isLiked;
+  }
+
   toggleLikeButton() {
     this._cardElement
       .querySelector(".card__heart-button")
       .classList.toggle("card__heart-button_active");
   }
 
-  getCardEl() {
-    this._cardElement = document
-      .querySelector(this._cardSelector)
-      .content.querySelector(".card")
-      .cloneNode(true);
-    const cardImageEl = this._cardElement.querySelector(".card__image");
-    const cardTitleEl = this._cardElement.querySelector(".card__title");
-
+  _renderLikes() {
     if (this._isLiked) {
       this._cardElement
         .querySelector(".card__heart-button")
@@ -77,7 +73,16 @@ export default class Card {
         .querySelector(".card__heart-button")
         .classList.remove("card__heart-button_active");
     }
+  }
 
+  getCardEl() {
+    this._cardElement = document
+      .querySelector(this._cardSelector)
+      .content.querySelector(".card")
+      .cloneNode(true);
+    const cardImageEl = this._cardElement.querySelector(".card__image");
+    const cardTitleEl = this._cardElement.querySelector(".card__title");
+    this._renderLikes();
     cardTitleEl.textContent = this._name;
     cardImageEl.setAttribute("alt", this._name);
     cardImageEl.setAttribute("src", this._link);

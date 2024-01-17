@@ -4,6 +4,10 @@ export default class Api {
     this._headers = options.headers;
   }
 
+  intialSetup(funcArr) {
+    return Promise.all(funcArr);
+  }
+
   _checkResponse(res) {
     if (res.ok) {
       return res.json();

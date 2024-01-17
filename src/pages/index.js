@@ -17,8 +17,8 @@ const profEditBtn = document.querySelector("#profile-edit-button");
 const profEditModal = document.querySelector("#profile-edit-modal");
 const profTitle = document.querySelector(".profile__title");
 const profDesc = document.querySelector(".profile__description");
-// const profEditNameInput = document.querySelector("#edit_modal-input-name");
-// const profEditDescInput = document.querySelector("#edit-modal-input-desc");
+const profEditNameInput = document.querySelector("#edit_modal-input-name");
+const profEditDescInput = document.querySelector("#edit-modal-input-desc");
 const profEditForm = profEditModal.querySelector(".modal__form");
 const profEditSaveBtn = profEditForm.querySelector(".modal__button");
 const profImage = document.querySelector(".profile__image");
@@ -28,7 +28,7 @@ const cardListEl = document.querySelector(".cards__list");
 const cardAddModal = document.querySelector("#card-add-modal");
 const cardAddBtn = document.querySelector("#card-add-button");
 const cardAddForm = cardAddModal.querySelector(".modal__form");
-const cardAddSaveBtn = cardAddForm.querySelector(".modal__button");
+// const cardAddSaveBtn = cardAddForm.querySelector(".modal__button");
 const cardDelConfirmModal = document.querySelector(
   "#card-delete-confirm-modal"
 );
@@ -36,7 +36,7 @@ const cardDelConfirmBtn = cardDelConfirmModal.querySelector(".modal__button");
 
 const updateAvatarModal = document.querySelector("#update-avatar-modal");
 const updateAvatarForm = updateAvatarModal.querySelector(".modal__form");
-const updateAvatarSaveBtn = updateAvatarModal.querySelector(".modal__button");
+// const updateAvatarSaveBtn = updateAvatarModal.querySelector(".modal__button");
 
 /* -------------------------------------------------------------------------- */
 /*                              Class Instances                 */
@@ -76,37 +76,10 @@ const api = new Api({
 /* -------------------------------------------------------------------------- */
 /*                                  API Calls                                 */
 /* -------------------------------------------------------------------------- */
-let section;
-api
-  .getInitialCards()
-  .then((res) => {
-    section = new Section(
-      {
-        items: res,
-        renderer: (cardData) => {
-          const cardElement = renderCard(cardData);
-          section.addItem(cardElement);
-        },
-      },
-      cardListEl
-    );
-    section.renderItems();
-    cl(res);
-  })
-  .catch((err) => {
-    console.error(`Error ${err}`);
-  });
 
-api
-  .loadUserInfo()
-  .then((res) => {
-    cl(res);
-    userInfo.setUserInfo(res.name, res.about);
-    userInfo.setUserAvatar(res.avatar);
-  })
-  .catch((err) => {
-    console.error(`Error ${err}`);
-  });
+let section;
+
+api.intialSetup([getInitalCards(), getInitialInfo()]);
 
 /* -------------------------------------------------------------------------- */
 /*                                  Functions                                 */
@@ -120,7 +93,6 @@ function renderCard(cardData) {
     function handleDelBtn(cardInstance) {
       deleteCardModal.open();
       deleteCardModal.setSubmitAction(() => {
-        loadingNotification(profEditSaveBtn);
         api
           .deleteCard(cardInstance.getId())
           .then(() => {
@@ -129,36 +101,67 @@ function renderCard(cardData) {
           })
           .catch((err) => {
             console.error(`Error ${err}`);
-          })
-          .finally(() => {
-            loadingNotification(cardDelConfirmBtn);
           });
       });
     },
-    function handleAddLike(cardInstance) {
-      api
-        .addCardLike(cardInstance.getId())
-        .then((res) => {
-          cl(res);
-          card.toggleLikeButton();
-        })
-        .catch((err) => {
-          console.error(`Error ${err}`);
-        });
-    },
-    function handleDeleteLike(cardInstance) {
-      api
-        .removeCardLike(cardInstance.getId())
-        .then((res) => {
-          cl(res);
-          card.toggleLikeButton();
-        })
-        .catch((err) => {
-          console.error(`Error ${err}`);
-        });
+    function handleLikes(cardInstance) {
+      if (card.isLiked()) {
+        api
+          .removeCardLike(cardInstance.getId())
+          .then((res) => {
+            card.setIsLiked(res._isLiked);
+          })
+          .catch((err) => {
+            console.error(`Error ${err}`);
+          });
+      } else {
+        api
+          .addCardLike(cardInstance.getId())
+          .then((res) => {
+            card.setIsLiked(!res._isLiked);
+          })
+          .catch((err) => {
+            console.error(`Error ${err}`);
+          });
+      }
     }
   );
   return card.getCardEl();
+}
+
+function getInitalCards() {
+  api
+    .getInitialCards()
+    .then((res) => {
+      section = new Section(
+        {
+          items: res,
+          renderer: (cardData) => {
+            const cardElement = renderCard(cardData);
+            section.addItem(cardElement);
+          },
+        },
+        cardListEl
+      );
+      section.renderItems();
+      cl(res);
+    })
+    .catch((err) => {
+      console.error(`Error ${err}`);
+    });
+}
+
+function getInitialInfo() {
+  api
+    .loadUserInfo()
+    .then((res) => {
+      cl(res);
+      userInfo.setUserInfo(res.name, res.about);
+      userInfo.setUserAvatar(res.avatar);
+    })
+    .catch((err) => {
+      console.error(`Error ${err}`);
+    });
 }
 
 function handleImageClick(cardData) {
@@ -166,27 +169,27 @@ function handleImageClick(cardData) {
 }
 
 function handleProfInfoUpdate() {
-  loadingNotification(profEditSaveBtn);
-  // let oldBtnText = profEditSaveBtn.textContent;
-  // profEditSaveBtn.textContent = "Saving...";
+  editProfModal.showLoading(true);
   cl(userInfo.getUserInfo());
   api
     .updateUserInfo(userInfo.getUserInfo())
     .then((res) => {
       userInfo.setUserInfo(res.name, res.about);
+      showLoading(false, profEditSaveBtn);
+      editProfModal.close();
     })
     .catch((err) => {
       console.error(`Error ${err}`);
     })
     .finally(() => {
-      loadingNotification(false, profEditSaveBtn);
-      editProfModal.close();
-      // profEditSaveBtn.textContent = oldBtnText;
+      setTimeout(() => {
+        editProfModal.showLoading(false);
+      }, 1000);
     });
 }
 
 function handleAvatarUpdate(inputValue) {
-  loadingNotification(updateAvatarSaveBtn);
+  avatarUpdateModal.showLoading(true);
   api
     .updateUserAvatar(inputValue)
     .then((res) => {
@@ -197,7 +200,9 @@ function handleAvatarUpdate(inputValue) {
       console.error(`Error ${err}`);
     })
     .finally(() => {
-      loadingNotification(updateAvatarSaveBtn);
+      setTimeout(() => {
+        avatarUpdateModal.showLoading(false);
+      }, 1000);
     });
 }
 
@@ -208,7 +213,7 @@ function handleProfEditSubmit(profileData) {
 }
 
 function handleAddCardSubmit(inputValues) {
-  loadingNotification(cardAddSaveBtn);
+  addCardModal.showLoading(true);
   const { title, url } = inputValues;
   const cardData = { name: title, link: url };
   api
@@ -216,21 +221,16 @@ function handleAddCardSubmit(inputValues) {
     .then((cardData) => {
       const card = renderCard(cardData);
       section.addItem(card);
-      cl(JSON.stringify(cardData));
+      addCardModal.close();
     })
     .catch((err) => {
       console.error(`Error ${err}`);
     })
     .finally(() => {
-      loadingNotification(cardAddSaveBtn);
+      setTimeout(() => {
+        addCardModal.showLoading(false);
+      }, 1000);
     });
-  editFormValidator.resetModalValidity();
-  addCardModal.close();
-}
-
-function loadingNotification(button, loadingText = "Saving...") {
-  cl("SAVE");
-  button.textContent = loadingText;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -257,11 +257,14 @@ deleteCardModal.setEventListeners();
 
 profEditBtn.addEventListener("click", () => {
   editFormValidator.resetModalValidity();
+  profEditNameInput.value = profTitle.textContent;
+  profEditDescInput.value = profDesc.textContent;
   editProfModal.open();
 });
 
 profAvatarEditBtn.addEventListener("click", (e) => {
   e.preventDefault();
+  avatarUpdateValidator.resetModalValidity();
   avatarUpdateModal.open();
 });
 

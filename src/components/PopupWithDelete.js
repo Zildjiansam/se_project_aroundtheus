@@ -3,7 +3,7 @@ import Popup from "./Popup.js";
 export default class PopupWithDelete extends Popup {
   constructor(modalSelector) {
     super(modalSelector);
-    this._formElement = this._modalElement.querySelector(".modal__form");
+    this._formElement = this._modalSelector.querySelector(".modal__form");
   }
 
   setSubmitAction(fn) {
