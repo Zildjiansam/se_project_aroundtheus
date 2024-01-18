@@ -85,8 +85,8 @@ function renderCard(cardData) {
     handleImageClick,
     function handleDelBtn(cardInstance) {
       deleteCardModal.open();
-      deleteCardModal.showLoading(true);
       deleteCardModal.setSubmitAction(() => {
+        deleteCardModal.showLoading(true);
         api
           .deleteCard(cardInstance.getId())
           .then(() => {
