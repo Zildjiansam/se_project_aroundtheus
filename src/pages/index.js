@@ -85,11 +85,11 @@ function renderCard(cardData) {
     handleImageClick,
     function handleDelBtn(cardInstance) {
       deleteCardModal.open();
+      deleteCardModal.showLoading(true);
       deleteCardModal.setSubmitAction(() => {
         api
           .deleteCard(cardInstance.getId())
           .then(() => {
-            deleteCardModal.showLoading(true);
             deleteCardModal.close();
             cardInstance.handleDeleteCard();
           })
@@ -167,9 +167,8 @@ function handleImageClick(cardData) {
 
 function handleProfInfoUpdate(profileData) {
   editProfModal.showLoading(true);
-  userInfo.setUserInfo(profileData.title, profileData.description);
   api
-    .updateUserInfo(userInfo.getUserInfo())
+    .updateUserInfo(profileData)
     .then((res) => {
       userInfo.setUserInfo(res.name, res.about);
       editProfModal.close();
