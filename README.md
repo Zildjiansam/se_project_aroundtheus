@@ -12,6 +12,8 @@ This is a photo sharing page, repsonsively built, to create one's own profile, s
 
 - HTML
 - CSS, utilizing Flexbox and Grid display
+- Javascript, utilizing classes throughout for compartmentalizing
+- Webpack for bundling/deployment
 - Figma, for design purposes
 
 **Links**
