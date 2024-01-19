@@ -19,20 +19,19 @@
       </header>
       <main class="content">
         <section class="profile page__section">
-          <img
-            src="<%=require('./images/jacques-cousteau.jpg')%>"
-            alt="Avatar"
-            class="profile__image"
-          />
+          <div class="profile__container">
+            <img alt="Avatar" class="profile__image" />
+            <button class="profile__image_edit-button" type="button"></button>
+          </div>
           <div class="profile__info">
-            <h1 class="profile__title">Jacques Cousteau</h1>
+            <h1 class="profile__title"></h1>
             <button
               class="profile__edit-button"
               id="profile-edit-button"
               type="button"
               aria-label="edit"
             ></button>
-            <p class="profile__description">Explorer</p>
+            <p class="profile__description"></p>
           </div>
           <button
             class="profile__card-add-button"
@@ -50,7 +49,32 @@
       </footer>
     </div>
 
-    <!-- ----------------------------- Edit Modal ------------------------------ -->
+    <!-- ------------------------- Update Avatar Modal ---------------------- -->
+
+    <div class="modal" id="update-avatar-modal">
+      <div class="modal__container">
+        <button class="modal__close" type="button"></button>
+        <h3 class="modal__heading">Change profile picture</h3>
+        <form class="modal__form" novalidate>
+          <input
+            type="url"
+            name="avatar"
+            class="modal__input"
+            id="edit_modal-input-avatar"
+            placeholder="URL"
+            minlength="2"
+            required
+          />
+          <span
+            class="modal__input-error"
+            id="edit_modal-input-avatar-error"
+          ></span>
+          <button class="modal__button" type="submit">Save</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- ------------------------- Edit Profile Modal ------------------------------ -->
     <div class="modal" id="profile-edit-modal">
       <div class="modal__container">
         <button class="modal__close" type="button"></button>
@@ -84,7 +108,13 @@
             class="modal__input-error"
             id="edit-modal-input-desc-error"
           ></span>
-          <button class="modal__button" type="submit">Save</button>
+          <button
+            class="modal__button"
+            id="profile-edit-save-btn"
+            type="submit"
+          >
+            Save
+          </button>
         </form>
       </div>
     </div>
@@ -125,6 +155,7 @@
         </form>
       </div>
     </div>
+
     <!-- ------------------------- Image Preview Modal ------------------------- -->
     <div class="modal" id="image-preview-modal">
       <div class="modal__image-container">
@@ -133,6 +164,20 @@
         <p class="modal__preview-image-caption"></p>
       </div>
     </div>
+
+    <!-- ------------------- Card Delete Confirmation Modal -------------------- -->
+
+    <div class="modal" id="card-delete-confirm-modal">
+      <div class="modal__container">
+        <button class="modal__close" type="button"></button>
+        <h3 class="modal__heading">Are you sure?</h3>
+        <form class="modal__form" novalidate>
+          <button class="modal__button" type="submit">Yes</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- ---------------------------- Card Template ---------------------------- -->
 
     <template id="card-template">
       <li class="card">
@@ -152,7 +197,7 @@
         </div>
       </li>
     </template>
-
-    <!-- <script type="module" src="./pages/index.js" defer></script> -->
   </body>
 </html>
+
+<!-- src="<%=require('./images/jacques-cousteau.jpg')%>" -->

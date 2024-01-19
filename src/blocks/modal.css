@@ -21,7 +21,6 @@
 .modal__container {
   box-sizing: border-box;
   width: 430px;
-  height: 350px;
   flex-shrink: 0;
   background: #fff;
   border-radius: 10px;
@@ -35,6 +34,16 @@
   font-style: normal;
   font-weight: 900;
   line-height: normal;
+}
+
+.modal:first-of-type:first-child {
+  height: 181px;
+  padding: 28px 36px 34px;
+}
+
+.modal:last-of-type:first-child {
+  height: 181px;
+  padding: 28px 36px 34px;
 }
 
 .modal__image-container {
@@ -89,7 +98,7 @@
 
 .modal__heading {
   color: #000;
-  margin: 0 auto;
+  margin: 0 0 38px 0;
 }
 
 .modal__form {
@@ -139,7 +148,7 @@
 }
 
 .modal__input:first-of-type {
-  margin-top: 54px;
+  margin-top: 16px;
 }
 
 .modal__input:last-of-type {
@@ -181,7 +190,6 @@
   .modal__container {
     padding: 25px 22px;
     width: 282px;
-    height: 322px;
   }
   .modal__heading {
     color: #000;
